@@ -1,16 +1,5 @@
-# student_faq
+# STUDENT_FAQ
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Student FAQ to aplikacja, która ma za zadanie ułatwić komunikację między studentami, a wykładowcą.
+Dzięki aplikacji studenci będą mogli na żywo w trakcie wykładu zadawać pytania, natomiast wykładowca będzie mógł w tym samym czasie odpowiadać na nie.
+Dodatkowo sesje pytań i odpowiedzi z wykładów będą zapisywane tak by studenci po odbytych zajęciach dalej mieli dostęp, a wykładowca mógł bardziej klarownie i szczegółowo odpowiedzieć na wszelkie pytania, które naszły studentów w trakcie zajęć.
