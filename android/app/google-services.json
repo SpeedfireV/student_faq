@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1044331420667",
+    "project_id": "studentfaq-bd949",
+    "storage_bucket": "studentfaq-bd949.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044331420667:android:2c6ee38754bd6e436f495e",
+        "android_client_info": {
+          "package_name": "com.example.student_faq"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS9U52J4diSjqKglWbmSx3vJl1q72NQRw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
