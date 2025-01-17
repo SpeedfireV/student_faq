@@ -13,10 +13,12 @@ class _SessionPageState extends State<SessionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
-        Text("Message"),
-        TextField(decoration: InputDecoration(hintText: "Question"),),
-      ],),
+      body: SafeArea(
+        child: Column(children: [
+          Text("Message"),
+          TextField(decoration: InputDecoration(hintText: "Question"),),
+        ],),
+      ),
     );
   }
 }
