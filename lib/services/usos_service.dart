@@ -1,57 +1,64 @@
 import 'dart:io';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/cupertino.dart';
 import 'package:oauth1/oauth1.dart' as oauth1;
+import 'package:url_launcher/url_launcher.dart';
 
 class UsosService {
-  static Future<void> authenticateUser() async {
-    var platform = oauth1.Platform(
-      'https://apps.usos.pw.edu.pl/services/oauth/request_token', // Temporary credentials request
-      'https://apps.usos.pw.edu.pl/services/oauth/authorize', // Resource owner authorization
-      'https://apps.usos.pw.edu.pl/services/oauth/access_token', // Token credentials request
-      oauth1.SignatureMethods.hmacSha1, // Signature method
-    );
+  late oauth1.AuthorizationResponse temporaryCredentials;
+  late oauth1.Client client;
+  static oauth1.Platform platform = oauth1.Platform(
+    'https://apps.usos.pw.edu.pl/services/oauth/request_token?scopes=studies|staff_perspective', // Temporary credentials request
+    'https://apps.usos.pw.edu.pl/services/oauth/authorize', // Resource owner authorization
+    'https://apps.usos.pw.edu.pl/services/oauth/access_token', // Token credentials request
+    oauth1.SignatureMethods.hmacSha1, // Signature method
+  );
+  static String apiKey = dotenv.env['USOS_API_KEY']!;
+  static String apiSecret = dotenv.env["USOS_API_SECRET"]!;
+  static oauth1.ClientCredentials clientCredentials = oauth1.ClientCredentials(apiKey, apiSecret);
+  oauth1.Authorization auth =
+  oauth1.Authorization(clientCredentials, platform);
 
-    const String apiKey = 'sxfQz2LmQGPYbGTpsgkM';
-    const String apiSecret = 'ss4CHVmtMPy7GXTeptWnShHrVSLJfN8C8sxbW4sH';
-    var clientCredentials = oauth1.ClientCredentials(apiKey, apiSecret);
 
-    oauth1.Authorization auth =
-        oauth1.Authorization(clientCredentials, platform);
+  Future<void> obtainPIN() async {
 
     try {
-      // Step 1: Request temporary credentials
-      var tempCredentials = await auth.requestTemporaryCredentials('oob');
-
-      // Step 2: Redirect user to authorization page
-      debugPrint(
-          "Open this URL in your browser to authorize: ${auth.getResourceOwnerAuthorizationURI(tempCredentials.credentials.token)}");
-
-      // TODO: Replace this with a Flutter UI to get the PIN from the user
-      stdout.write("Enter the PIN displayed after authorization: ");
-      String? verifier = stdin.readLineSync();
-
-      if (verifier == null || verifier.isEmpty) {
-        throw Exception("No PIN provided!");
-      }
-
-      // Step 3: Request token credentials
-      var tokenCredentials = await auth.requestTokenCredentials(
-        tempCredentials.credentials,
-        verifier,
-      );
-
-      // Step 4: Use the token credentials to create an authenticated client
-      var client = oauth1.Client(
-        platform.signatureMethod,
-        clientCredentials,
-        tokenCredentials.credentials,
-      );
-
-      debugPrint(
-          "Successfully authenticated! Token: ${tokenCredentials.credentials.token}");
+      temporaryCredentials = await auth.requestTemporaryCredentials('oob');
+      String authorizationUrl = auth.getResourceOwnerAuthorizationURI(temporaryCredentials.credentials.token);
+      // authorizationUrl += "&scopes=cards";
+      await launchUrl(Uri.parse(authorizationUrl));
     } catch (e) {
       debugPrint("Error during authentication: $e");
     }
   }
+  Future<void> requestCredentialsUsingPin(String PIN) async {
+    var tokenCredentials = await auth.requestTokenCredentials(
+      temporaryCredentials.credentials,
+      PIN,
+    );
+    client = oauth1.Client(
+      platform.signatureMethod,
+      clientCredentials,
+      tokenCredentials.credentials,
+    );
+  }
+
+  Future<void> getStudentStatus() async {
+    try {
+      final response = await client.get(Uri.parse("https://apps.usos.pw.edu.pl/services/users/user"));
+
+      debugPrint("Request Headers: ${response.request?.headers}");
+
+      if (response.statusCode == 200) {
+        debugPrint("Response: ${response.body}");
+      } else {
+        debugPrint("Error: ${response.statusCode}, ${response.body}");
+      }
+    } catch (e) {
+      debugPrint("Exception: $e");
+    }
+  }
+
 }
