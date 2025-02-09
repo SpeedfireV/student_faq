@@ -9,8 +9,10 @@ part 'session_model.freezed.dart';
 @freezed
 class Session with _$Session {
   const factory Session ({
+    required String sessionId,
     required String sessionName,
     required List<Question> questions,
+
   }) = _Session;
 
   factory Session.fromJson(Map<String, Object?> json)

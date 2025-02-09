@@ -1,14 +1,17 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/cupertino.dart';
 import 'package:oauth1/oauth1.dart' as oauth1;
+import 'package:student_faq/models/student_info/student_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UsosService {
   late oauth1.AuthorizationResponse temporaryCredentials;
   late oauth1.Client client;
+  StudentInfo? studentInfo;
   static oauth1.Platform platform = oauth1.Platform(
     'https://apps.usos.pw.edu.pl/services/oauth/request_token?scopes=studies|staff_perspective', // Temporary credentials request
     'https://apps.usos.pw.edu.pl/services/oauth/authorize', // Resource owner authorization
@@ -49,15 +52,32 @@ class UsosService {
     try {
       final response = await client.get(Uri.parse("https://apps.usos.pw.edu.pl/services/users/user"));
 
-      debugPrint("Request Headers: ${response.request?.headers}");
-
       if (response.statusCode == 200) {
-        debugPrint("Response: ${response.body}");
+        debugPrint(response.body);
+        studentInfo =StudentInfo.fromJson( json.decode(response.body));
+        getClasses();
       } else {
         debugPrint("Error: ${response.statusCode}, ${response.body}");
       }
     } catch (e) {
       debugPrint("Exception: $e");
+    }
+  }
+  Future<void> getClasses() async {
+    try {
+      final response = await client.get(Uri.parse("https://apps.usos.pw.edu.pl/services/tt/user?start=2024-10-1")); // TODO: SET TO DEFAULT START DATE
+
+      if (response.statusCode == 200) {
+
+        debugPrint(response.body);
+      } else {
+        throw "Error: ${response.statusCode}, ${response.body}";
+      }
+
+    } catch (e) {
+      debugPrint(
+        "Exception: $e"
+      );
     }
   }
 
