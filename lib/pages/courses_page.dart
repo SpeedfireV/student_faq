@@ -18,7 +18,7 @@ class _CoursesPageState extends State<CoursesPage> {
           return Scaffold(
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                MyRouter.router.go("/join_session");
+                MyRouter.router.go("/main_page/join_session");
               },
               heroTag: "joinSession",
               child: Icon(Icons.add),
