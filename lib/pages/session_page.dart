@@ -1,6 +1,8 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:student_faq/consts/color_palette.dart';
+import 'package:student_faq/consts/styles/text_styles.dart';
+import 'package:student_faq/question_bar.dart';
 
 class SessionPage extends StatefulWidget {
   const SessionPage({super.key});
@@ -14,10 +16,153 @@ class _SessionPageState extends State<SessionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(children: [
-          Text("Message"),
-          TextField(decoration: InputDecoration(hintText: "Question"),),
-        ],),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      FloatingActionButton(
+                          onPressed: () {},
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: ColorPalette.snowWhiteColor,
+                          ),
+                          heroTag: "sideBar"),
+                      Expanded(child: Container()),
+                      Text("SPOTKANIE", style: TextStyles.pageTitle),
+                      Expanded(child: Container()),
+                    ],
+                  ),
+                  SizedBox(height: 32),
+                  Flexible(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Material(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            elevation: 5,
+                            color: ColorPalette.snowWhiteColor,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(10),
+                              onTap: () {},
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0, vertical: 8),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Anonymous Goose",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            SizedBox(height: 4),
+                                            Row(
+                                              children: [
+                                                Icon(false
+                                                    ? Icons.attach_file
+                                                    : Icons
+                                                        .attach_file_sharp), // TODO: Add file off
+                                                Text("Brak Załączników",
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w300)),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text("5"),
+                                            SizedBox(width: 8),
+                                            Icon(
+                                              Icons.thumb_up_outlined,
+                                              color: ColorPalette
+                                                  .buttonBackgroundColor,
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(height: 16),
+                                    Text(
+                                      "Czy 2+2 to 4?",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    Divider(
+                                      thickness: 2,
+                                      color: ColorPalette.brown,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                            "Karol Styka (Prowadzący): 2 + 2 to 4."),
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text("5"),
+                                            SizedBox(width: 8),
+                                            Icon(
+                                              Icons.thumb_up_outlined,
+                                              color: ColorPalette
+                                                  .buttonBackgroundColor,
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(height: 16),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.reply),
+                                        Text("5 Odpowiedzi"),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: QuestionBar()),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
