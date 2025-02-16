@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:student_faq/pages/courses/meetings_page.dart';
+import 'package:student_faq/pages/meetings/meetings_page.dart';
 import 'package:student_faq/pages/home_page.dart';
 import 'package:student_faq/pages/groups/groups_page.dart';
 import 'package:student_faq/pages/responses/responses_page.dart';
 import 'package:student_faq/pages/start_pages/login_page.dart';
-import 'package:student_faq/pages/session_page.dart';
+import 'package:student_faq/pages/meetings/meeting_page.dart';
 import 'package:student_faq/pages/start_pages/start_pages.dart';
 
 import 'pages/join_session_page.dart';
@@ -26,16 +26,28 @@ class MyRouter {
           GoRoute(
               path: "/session_page",
               pageBuilder: (context, state) =>
-                  MaterialPage(child: SessionPage())),
+                  MaterialPage(child: MeetingPage())),
         ]),
     GoRoute(
       path: "/groups",
       pageBuilder: (context, state) => MaterialPage(child: GroupsPage()),
     ),
     GoRoute(
-      path: "/meetings",
-      pageBuilder: (context, state) => MaterialPage(child: MeetingsPage()),
-    ),
+        path: "/meetings",
+        pageBuilder: (context, state) => MaterialPage(child: MeetingsPage()),
+        routes: [
+          GoRoute(
+              path: "/meeting",
+              pageBuilder: (context, state) =>
+                  MaterialPage(child: MeetingPage()),
+              routes: [
+                GoRoute(
+                  path: "/responses",
+                  pageBuilder: (context, state) =>
+                      MaterialPage(child: ResponsesPage()),
+                )
+              ])
+        ]),
     GoRoute(
       path: "/universities",
       pageBuilder: (context, state) => MaterialPage(child: HomePage()),
