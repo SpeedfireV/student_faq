@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:student_faq/pages/courses/courses_page.dart';
+import 'package:student_faq/pages/courses/meetings_page.dart';
 import 'package:student_faq/pages/home_page.dart';
-import 'package:student_faq/pages/programmes/programmes_page.dart';
+import 'package:student_faq/pages/groups/groups_page.dart';
 import 'package:student_faq/pages/responses/responses_page.dart';
 import 'package:student_faq/pages/start_pages/login_page.dart';
 import 'package:student_faq/pages/session_page.dart';
@@ -28,10 +28,23 @@ class MyRouter {
               pageBuilder: (context, state) =>
                   MaterialPage(child: SessionPage())),
         ]),
-    GoRoute(path: "/groups"),
-    GoRoute(path: "/meetings"),
-    GoRoute(path: "/universities"),
-    GoRoute(path: "/settings"),
-    GoRoute(path: "/report")
+    GoRoute(
+      path: "/groups",
+      pageBuilder: (context, state) => MaterialPage(child: GroupsPage()),
+    ),
+    GoRoute(
+      path: "/meetings",
+      pageBuilder: (context, state) => MaterialPage(child: MeetingsPage()),
+    ),
+    GoRoute(
+      path: "/universities",
+      pageBuilder: (context, state) => MaterialPage(child: HomePage()),
+    ),
+    GoRoute(
+        path: "/settings",
+        pageBuilder: (context, state) => MaterialPage(child: HomePage())),
+    GoRoute(
+        path: "/report",
+        pageBuilder: (context, state) => MaterialPage(child: HomePage()))
   ]);
 }

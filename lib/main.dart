@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:student_faq/bloc/navigation/navigation_cubit.dart';
 import 'package:student_faq/bloc/usos_authentication/usos_authentication_bloc.dart';
 import 'package:student_faq/consts/color_palette.dart';
 import 'package:student_faq/router.dart';
@@ -15,9 +16,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(BlocProvider(
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MultiBlocProvider(
     child: const MainApp(),
-    create: (context) => UsosAuthenticationBloc(),
+    providers: [
+      BlocProvider(create: (context) => UsosAuthenticationBloc()),
+      BlocProvider(create: (context) => NavigationCubit())
+    ],
   ));
 }
 
