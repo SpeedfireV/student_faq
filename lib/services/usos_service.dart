@@ -8,6 +8,8 @@ import 'package:oauth1/oauth1.dart' as oauth1;
 import 'package:student_faq/models/student_info/student_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../models/programme/programme_model.dart';
+
 class UsosService {
   late oauth1.AuthorizationResponse temporaryCredentials;
   late oauth1.Client client;
@@ -48,14 +50,16 @@ class UsosService {
     );
   }
 
-  Future<void> getStudentStatus() async {
+  Future<StudentInfo?> getStudentStatus() async {
     try {
       final response = await client.get(Uri.parse("https://apps.usos.pw.edu.pl/services/users/user"));
 
       if (response.statusCode == 200) {
         debugPrint(response.body);
         studentInfo =StudentInfo.fromJson( json.decode(response.body));
-        getClasses();
+        getProgrammes();
+        return studentInfo;
+
       } else {
         debugPrint("Error: ${response.statusCode}, ${response.body}");
       }
@@ -63,21 +67,23 @@ class UsosService {
       debugPrint("Exception: $e");
     }
   }
-  Future<void> getClasses() async {
+  Future<Iterable<Programme>?> getProgrammes() async {
     try {
-      final response = await client.get(Uri.parse("https://apps.usos.pw.edu.pl/services/tt/user?start=2024-10-1")); // TODO: SET TO DEFAULT START DATE
+      final response = await client.get(Uri.parse("https://apps.usos.pw.edu.pl/services/tt/user?start=2024-10-1"));
 
       if (response.statusCode == 200) {
+        debugPrint(response.body); // Use debugPrint instead of print
 
-        debugPrint(response.body);
+        List<dynamic> jsonData = json.decode(response.body);
+
+        return jsonData.map((studentClass) {
+          return Programme.fromJson(studentClass as Map<String, dynamic>); // Explicit casting
+        });
       } else {
         throw "Error: ${response.statusCode}, ${response.body}";
       }
-
     } catch (e) {
-      debugPrint(
-        "Exception: $e"
-      );
+      debugPrint("Exception: $e");
     }
   }
 
