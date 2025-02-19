@@ -89,9 +89,14 @@ Możesz zalogować się, również później.
                           border: OutlineInputBorder(),
                           hintText: "PIN",
                         ),
-                        onChanged: (String newPin) {
-                          BlocProvider.of<EnteredPinCubit>(context)
-                              .changePin(newPin);
+                        onChanged: (String newPin) async {
+                          if (await BlocProvider.of<EnteredPinCubit>(context)
+                                  .changePin(newPin) ==
+                              true) {
+                            BlocProvider.of<UsosAuthenticationBloc>(context)
+                                .add(UsosAuthenticationAuthenticate(newPin));
+                            print(newPin);
+                          }
                         },
                         keyboardType: TextInputType.number,
                       ),

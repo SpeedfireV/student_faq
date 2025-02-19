@@ -22,22 +22,22 @@ class UsosService {
   );
   static String apiKey = dotenv.env['USOS_API_KEY']!;
   static String apiSecret = dotenv.env["USOS_API_SECRET"]!;
-  static oauth1.ClientCredentials clientCredentials = oauth1.ClientCredentials(apiKey, apiSecret);
-  oauth1.Authorization auth =
-  oauth1.Authorization(clientCredentials, platform);
-
+  static oauth1.ClientCredentials clientCredentials =
+      oauth1.ClientCredentials(apiKey, apiSecret);
+  oauth1.Authorization auth = oauth1.Authorization(clientCredentials, platform);
 
   Future<void> obtainPIN() async {
-
     try {
       temporaryCredentials = await auth.requestTemporaryCredentials('oob');
-      String authorizationUrl = auth.getResourceOwnerAuthorizationURI(temporaryCredentials.credentials.token);
+      String authorizationUrl = auth.getResourceOwnerAuthorizationURI(
+          temporaryCredentials.credentials.token);
       // authorizationUrl += "&scopes=cards";
       await launchUrl(Uri.parse(authorizationUrl));
     } catch (e) {
       debugPrint("Error during authentication: $e");
     }
   }
+
   Future<void> requestCredentialsUsingPin(String PIN) async {
     var tokenCredentials = await auth.requestTokenCredentials(
       temporaryCredentials.credentials,
@@ -52,14 +52,14 @@ class UsosService {
 
   Future<StudentInfo?> getStudentStatus() async {
     try {
-      final response = await client.get(Uri.parse("https://apps.usos.pw.edu.pl/services/users/user"));
+      final response = await client
+          .get(Uri.parse("https://apps.usos.pw.edu.pl/services/users/user"));
 
       if (response.statusCode == 200) {
         debugPrint(response.body);
-        studentInfo =StudentInfo.fromJson( json.decode(response.body));
+        studentInfo = StudentInfo.fromJson(json.decode(response.body));
         getProgrammes();
         return studentInfo;
-
       } else {
         debugPrint("Error: ${response.statusCode}, ${response.body}");
       }
@@ -67,9 +67,11 @@ class UsosService {
       debugPrint("Exception: $e");
     }
   }
+
   Future<Iterable<Programme>?> getProgrammes() async {
     try {
-      final response = await client.get(Uri.parse("https://apps.usos.pw.edu.pl/services/tt/user?start=2024-10-1"));
+      final response = await client.get(Uri.parse(
+          "https://apps.usos.pw.edu.pl/services/tt/user?start=2020-10-1"));
 
       if (response.statusCode == 200) {
         debugPrint(response.body); // Use debugPrint instead of print
@@ -77,7 +79,8 @@ class UsosService {
         List<dynamic> jsonData = json.decode(response.body);
 
         return jsonData.map((studentClass) {
-          return Programme.fromJson(studentClass as Map<String, dynamic>); // Explicit casting
+          return Programme.fromJson(
+              studentClass as Map<String, dynamic>); // Explicit casting
         });
       } else {
         throw "Error: ${response.statusCode}, ${response.body}";
@@ -86,5 +89,4 @@ class UsosService {
       debugPrint("Exception: $e");
     }
   }
-
 }

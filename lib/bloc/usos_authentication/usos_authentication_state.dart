@@ -9,6 +9,8 @@ class UsosAuthenticationObtainingPin extends UsosAuthenticationState {}
 
 class UsosAuthenticationPinObtained extends UsosAuthenticationState {}
 
+class UsosAuthenticationAuthenticationFailed extends UsosAuthenticationState {}
+
 class UsosAuthenticationUserAuthenticated extends UsosAuthenticationState {}
 
 class UsosAuthenticationError extends UsosAuthenticationState {
