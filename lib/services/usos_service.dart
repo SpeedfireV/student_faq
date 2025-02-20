@@ -58,7 +58,6 @@ class UsosService {
       if (response.statusCode == 200) {
         debugPrint(response.body);
         studentInfo = StudentInfo.fromJson(json.decode(response.body));
-        getProgrammes();
         return studentInfo;
       } else {
         debugPrint("Error: ${response.statusCode}, ${response.body}");
@@ -71,16 +70,32 @@ class UsosService {
   Future<Iterable<Programme>?> getProgrammes() async {
     try {
       final response = await client.get(Uri.parse(
-          "https://apps.usos.pw.edu.pl/services/tt/user?start=2020-10-1"));
+          "https://apps.usos.pw.edu.pl/services/tt/user?start=2024-10-1&fields=course_id|lecturer_ids|classtype_name|type|name|start_time|end_time"));
 
       if (response.statusCode == 200) {
-        debugPrint(response.body); // Use debugPrint instead of print
-
-        List<dynamic> jsonData = json.decode(response.body);
-
-        return jsonData.map((studentClass) {
-          return Programme.fromJson(
-              studentClass as Map<String, dynamic>); // Explicit casting
+        List<dynamic> activities = json.decode(response.body);
+        final classgroups = activities
+            .where((activity) =>
+                activity['type'] == 'classgroup' ||
+                activity['type'] == 'classgroup2')
+            .toList();
+        List<List<String>> lecturers = [];
+        for (dynamic classgroup in classgroups) {
+          List<String> classgroupLecturers = [];
+          for (int lecturerId in classgroup["lecturer_ids"]) {
+            final response = await client.get(Uri.parse(
+                "https://apps.usos.pw.edu.pl/services/users/user?user_id=${lecturerId}"));
+            if (response.statusCode == 200) {
+              classgroupLecturers.add(json.decode(response.body)["first_name"] +
+                  " " +
+                  json.decode(response.body)["last_name"]);
+            }
+          }
+          lecturers.add([...classgroupLecturers]);
+        }
+        return classgroups.asMap().entries.map((entry) {
+          return (Programme.fromJson(entry.value as Map<String, dynamic>))
+              .copyWith(lecturers: lecturers.elementAt(entry.key));
         });
       } else {
         throw "Error: ${response.statusCode}, ${response.body}";

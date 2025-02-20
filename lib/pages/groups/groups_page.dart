@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:student_faq/bloc/groups/groups_bloc.dart';
 import 'package:student_faq/consts/color_palette.dart';
 import 'package:student_faq/consts/styles/button_styles.dart';
 import 'package:student_faq/consts/styles/text_styles.dart';
@@ -93,7 +95,57 @@ class _GroupsPageState extends State<GroupsPage> {
                 thickness: 2,
                 color: ColorPalette.brown,
               ),
-              GroupCard()
+              Expanded(
+                child: BlocBuilder<GroupsBloc, GroupsState>(
+                    builder: (context, state) {
+                  if (state is GroupsStateFetched) {
+                    print(BlocProvider.of<GroupsBloc>(context).groups);
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return GroupCard(
+                          group: BlocProvider.of<GroupsBloc>(context)
+                              .groups
+                              .elementAt(index),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return SizedBox(height: 16);
+                      },
+                      itemCount:
+                          BlocProvider.of<GroupsBloc>(context).groups.length,
+                    );
+                  }
+                  else if (state is GroupsStateAddingGroups) {
+                    return CircularProgressIndicator();
+                  }
+
+                    else if (state is GroupsStateError) {
+                    return Text("Error");
+                  }
+                    if (
+                    BlocProvider.of<GroupsBloc>(context)
+                        .groups.length == 0
+                    ) {
+                      return Row(children: [Text("Nie jesteś jeszcze w żadnej grupie ;/")]);
+                    }
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return GroupCard(
+                        group: BlocProvider.of<GroupsBloc>(context)
+                            .groups
+                            .elementAt(index),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return SizedBox(height: 16);
+                    },
+                    itemCount:
+                    BlocProvider.of<GroupsBloc>(context).groups.length,
+                  );
+                }),
+              )
             ],
           ),
         )));

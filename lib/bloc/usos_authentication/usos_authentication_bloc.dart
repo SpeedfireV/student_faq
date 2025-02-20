@@ -5,10 +5,10 @@ import 'package:student_faq/services/usos_service.dart';
 part 'usos_authentication_event.dart';
 part 'usos_authentication_state.dart';
 
-class UsosAuthenticationBloc extends Bloc<UsosAuthenticationEvent, UsosAuthenticationState> {
-
+class UsosAuthenticationBloc
+    extends Bloc<UsosAuthenticationEvent, UsosAuthenticationState> {
+  UsosService usosService = UsosService();
   UsosAuthenticationBloc() : super(UsosAuthenticationInitial()) {
-    UsosService usosService = UsosService();
     on<UsosAuthenticationObtainPIN>((event, emit) async {
       emit(UsosAuthenticationObtainingPin());
       await usosService.obtainPIN();
@@ -19,11 +19,11 @@ class UsosAuthenticationBloc extends Bloc<UsosAuthenticationEvent, UsosAuthentic
       await usosService.getStudentStatus();
       emit(UsosAuthenticationUserAuthenticated());
     });
-
   }
 
   @override
-  void onTransition(Transition<UsosAuthenticationEvent, UsosAuthenticationState> transition) {
+  void onTransition(
+      Transition<UsosAuthenticationEvent, UsosAuthenticationState> transition) {
     print(transition);
   }
 }

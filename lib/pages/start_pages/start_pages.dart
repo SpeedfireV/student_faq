@@ -31,7 +31,7 @@ class StartPages extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 16.0, top: 32),
+                padding: const EdgeInsets.only(bottom: 16.0),
                 child: SmoothPageIndicator(
                   controller: pageController,
                   count: 4,

@@ -10,13 +10,17 @@ import 'package:student_faq/pages/start_pages/start_pages.dart';
 
 import 'pages/join_session_page.dart';
 
+class Routes {
+  static const String homePage = "/home_page";
+}
+
 class MyRouter {
   static final router = GoRouter(routes: [
     GoRoute(
         path: "/",
         pageBuilder: (context, state) => MaterialPage(child: StartPages())),
     GoRoute(
-        path: "/home_page",
+        path: Routes.homePage,
         pageBuilder: (context, state) => MaterialPage(child: HomePage()),
         routes: [
           GoRoute(

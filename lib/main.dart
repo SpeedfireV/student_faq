@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:student_faq/bloc/drawer_navigation/navigation_cubit.dart';
+import 'package:student_faq/bloc/groups/groups_bloc.dart';
+import 'package:student_faq/bloc/keyboard/keyboard_cubit.dart';
 import 'package:student_faq/bloc/usos_authentication/usos_authentication_bloc.dart';
 import 'package:student_faq/consts/color_palette.dart';
 import 'package:student_faq/router.dart';
@@ -21,16 +23,18 @@ void main() async {
     child: const MainApp(),
     providers: [
       BlocProvider(create: (context) => UsosAuthenticationBloc()),
-      BlocProvider(create: (context) => NavigationCubit())
+      BlocProvider(create: (context) => NavigationCubit()),
+      BlocProvider(create: (context) => GroupsBloc()),
+      BlocProvider(create: (context) => KeyboardCubit())
     ],
   ));
 }
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
-
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp.router(
       theme: ThemeData(
           inputDecorationTheme: InputDecorationTheme(
