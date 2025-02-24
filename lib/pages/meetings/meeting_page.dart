@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_faq/consts/color_palette.dart';
 import 'package:student_faq/consts/styles/text_styles.dart';
-import 'package:student_faq/question_bar.dart';
+import 'package:student_faq/input_bar.dart';
 import 'package:student_faq/router.dart';
 
 class MeetingPage extends StatefulWidget {
@@ -164,7 +164,7 @@ class _MeetingPageState extends State<MeetingPage> {
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
-                    child: QuestionBar()),
+                    child: InputBar("Zapytaj")),
               )
             ],
           ),

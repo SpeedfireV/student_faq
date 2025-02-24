@@ -12,6 +12,7 @@ class Session with _$Session {
     required String sessionId,
     required String sessionName,
     required List<Question> questions,
+    required int likes,
 
   }) = _Session;
 

@@ -9,6 +9,7 @@ import 'package:student_faq/bloc/keyboard/keyboard_cubit.dart';
 import 'package:student_faq/bloc/usos_authentication/usos_authentication_bloc.dart';
 import 'package:student_faq/consts/color_palette.dart';
 import 'package:student_faq/router.dart';
+import 'package:student_faq/services/user_data_service.dart';
 
 import 'firebase_options.dart';
 
@@ -19,6 +20,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   WidgetsFlutterBinding.ensureInitialized();
+  final isUserIntroduced = await UserDataService().isUserIntroduced();
+  MyRouter.setRouter(isUserIntroduced ?? false);
   runApp(MultiBlocProvider(
     child: const MainApp(),
     providers: [

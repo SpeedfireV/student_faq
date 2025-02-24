@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:student_faq/consts/color_palette.dart';
 import 'package:student_faq/consts/styles/text_styles.dart';
 import 'package:student_faq/pages/responses/response_card.dart';
-import 'package:student_faq/question_bar.dart';
+import 'package:student_faq/input_bar.dart';
 import 'package:student_faq/router.dart';
 
 class ResponsesPage extends StatefulWidget {
@@ -53,7 +53,7 @@ class _ResponsesPageState extends State<ResponsesPage> {
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: Align(
-                  alignment: Alignment.bottomCenter, child: QuestionBar()),
+                  alignment: Alignment.bottomCenter, child: InputBar("Odpowiedz")),
             )
           ],
         ),

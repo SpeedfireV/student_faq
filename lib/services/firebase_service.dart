@@ -8,7 +8,7 @@ class FirebaseServices {
 
 
   static Session getSession(String sessionId) {
-    return Session(sessionName: "sessionName", questions: [], sessionId: ''); // TODO: Add Session Fetching
+    return Session(sessionName: "sessionName", questions: [], sessionId: '', likes: 0); // TODO: Add Session Fetching
   }
 
   static bool addAnswer(Session session, Question question, Answer answer) {

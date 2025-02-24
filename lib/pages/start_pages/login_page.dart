@@ -7,6 +7,7 @@ import 'package:student_faq/consts/color_palette.dart';
 import 'package:student_faq/consts/styles/button_styles.dart';
 import 'package:student_faq/consts/styles/text_styles.dart';
 import 'package:student_faq/router.dart';
+import 'package:student_faq/services/user_data_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -45,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                   BlocProvider.of<GroupsBloc>(context).add(GroupsEventAddGroups(
                       BlocProvider.of<UsosAuthenticationBloc>(context)
                           .usosService));
+                  await UserDataService().setUserIntroduced();
                   MyRouter.router.go(Routes.homePage);
                 }
               },
@@ -113,7 +115,8 @@ class _LoginPageState extends State<LoginPage> {
                               const Text("LUB"),
                               SizedBox(height: 16),
                               ElevatedButton(
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    await UserDataService().setUserIntroduced();
                                     MyRouter.router.go(Routes.homePage);
                                   },
                                   style: ButtonStyles.primaryInversedElevatedButton,
