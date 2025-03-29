@@ -6,7 +6,11 @@ class TextStyles {
       color: ColorPalette.snowWhiteColor,
       fontWeight: FontWeight.bold,
       fontSize: 27);
+  static TextStyle orangeButtonText = TextStyle(
+      fontSize: 21, fontWeight: FontWeight.w400, color: ColorPalette.snowWhiteColor);
   static TextStyle whiteButtonText = TextStyle(
+      fontSize: 21, fontWeight: FontWeight.w400, color: ColorPalette.brown);
+  static TextStyle dialogTitle = TextStyle(
       fontSize: 21, fontWeight: FontWeight.w400, color: ColorPalette.brown);
   static TextStyle pageTitle = TextStyle(
       color: ColorPalette.darkBlue,

@@ -7,6 +7,7 @@ import 'package:student_faq/consts/styles/button_styles.dart';
 import 'package:student_faq/consts/styles/text_styles.dart';
 import 'package:student_faq/pages/groups/group_card.dart';
 import 'package:student_faq/router.dart';
+import 'package:student_faq/widgets/buttons.dart';
 import 'package:student_faq/widgets/pages_drawer.dart';
 import 'package:student_faq/widgets/search_bar.dart';
 
@@ -28,7 +29,41 @@ class _GroupsPageState extends State<GroupsPage> {
               drawer: PagesDrawer(),
               floatingActionButton: FloatingActionButton.large(
                 onPressed: () {
-                  MyRouter.router.go(Routes.addGroup);
+                  showDialog(context: context, builder: (context) {
+                    return Dialog(child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(height: 16),
+                        Text("Nowa Grupa",  style: TextStyles.dialogTitle, textAlign: TextAlign.center,),
+                        SizedBox(height: 16),
+                        TextIconButton(function: () {
+                          if (MyRouter.router.canPop())
+                          {
+                            MyRouter.router.pop();
+                            MyRouter.router.goNamed(Routes.addGroup.name);
+                          }
+                        }, text: "Nowa Grupa", icon: Icon(Icons.person_add)),
+                        TextIconButton(function: () {
+                          if (MyRouter.router.canPop())
+                          {
+                            MyRouter.router.pop();
+                            MyRouter.router.goNamed(Routes.joinGroup.name);
+                          }
+
+                        }, text: "Dołacz Do Grupy", icon: Icon(Icons.add)),
+                        SizedBox(height: 8),
+                        TextButton(onPressed: () {
+                          if (MyRouter.router.canPop())
+                            {
+
+                              MyRouter.router.pop();
+                            }
+                        },child: Text("Close", style: TextStyle(color: ColorPalette.alertColor, fontSize: 16), )),
+                      SizedBox(height: 16)
+                      ],
+                    ),);
+                  });
+                  // MyRouter.router.goNamed(Routes.addGroup.name);
                 },
                 child: Icon(
                   Icons.add,
@@ -154,20 +189,23 @@ class _GroupsPageState extends State<GroupsPage> {
                             builder: (context, state) {
                           if (state is GroupsStateFetched) {
                             print(BlocProvider.of<GroupsBloc>(context).groups);
-                            return ListView.separated(
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return GroupCard(
-                                  group: BlocProvider.of<GroupsBloc>(context)
-                                      .groups
-                                      .elementAt(index),
-                                );
-                              },
-                              separatorBuilder: (context, index) {
-                                return SizedBox(height: 16);
-                              },
-                              itemCount:
-                                  BlocProvider.of<GroupsBloc>(context).groups.length,
+                            return ListView(
+                              children: [ListView.separated(
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return GroupCard(
+                                    group: BlocProvider.of<GroupsBloc>(context)
+                                        .groups
+                                        .elementAt(index),
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return SizedBox(height: 16);
+                                },
+                                itemCount:
+                                    BlocProvider.of<GroupsBloc>(context).groups.length,
+                              ),
+                              SizedBox(height: 16)]
                             );
                           }
                           else if (state is GroupsStateAddingGroups) {

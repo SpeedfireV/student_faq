@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:student_faq/consts/color_palette.dart';
-import 'package:student_faq/models/programme/programme_model.dart';
 import 'package:student_faq/router.dart';
+
+import '../../models/group/group_model.dart';
 
 class GroupCard extends StatelessWidget {
   const GroupCard({super.key, required this.group});
-  final Programme group;
+  final Group group;
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +14,8 @@ class GroupCard extends StatelessWidget {
       children: [
         Expanded(
           child: Material(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             elevation: 5,
             color: ColorPalette.snowWhiteColor,
             child: InkWell(
@@ -29,22 +30,17 @@ class GroupCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      group.name["pl"]!,
-                      style: TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w400),
+                      group.name,
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 8),
-
-                    Text(group.lecturers.toString().substring(1, group.lecturers.toString().length - 1),
+                    Text(
+                        group.lecturers.toString().substring(
+                            1, group.lecturers.toString().length - 1),
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.w300)),
-                    SizedBox(height: 16),
-                    Text(
-                      group.groupType["pl"]!,
-                      style: TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w500),
-                    )
                   ],
                 ),
               ),

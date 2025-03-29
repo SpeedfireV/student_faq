@@ -5,6 +5,8 @@ import 'package:student_faq/consts/styles/text_styles.dart';
 import 'package:student_faq/input_bar.dart';
 import 'package:student_faq/router.dart';
 
+import '../../widgets/buttons.dart';
+
 class MeetingPage extends StatefulWidget {
   const MeetingPage({super.key});
 
@@ -25,15 +27,7 @@ class _MeetingPageState extends State<MeetingPage> {
                 children: [
                   Row(
                     children: [
-                      FloatingActionButton(
-                          onPressed: () {
-                            MyRouter.router.pop();
-                          },
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: ColorPalette.snowWhiteColor,
-                          ),
-                          heroTag: "sideBar"),
+                      const CustomBackButton(),
                       Expanded(child: Container()),
                       Text("SPOTKANIE", style: TextStyles.pageTitle),
                       Expanded(child: Container()),

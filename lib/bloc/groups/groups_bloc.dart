@@ -1,13 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:student_faq/models/programme/programme_model.dart';
+import 'package:student_faq/models/group/group_model.dart';
 import 'package:student_faq/services/usos_service.dart';
 
 part 'groups_event.dart';
 part 'groups_state.dart';
 
 class GroupsBloc extends Bloc<GroupsEvent, GroupsState> {
-  Iterable<Programme> groups = [];
+  Iterable<Group> groups = [];
   GroupsBloc() : super(GroupsInitial()) {
     on<GroupsEventAddGroups>((event, emit) async {
       emit(GroupsStateAddingGroups());

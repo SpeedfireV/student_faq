@@ -5,10 +5,9 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter/cupertino.dart';
 import 'package:oauth1/oauth1.dart' as oauth1;
+import 'package:student_faq/models/group/group_model.dart';
 import 'package:student_faq/models/student_info/student_info.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../models/programme/programme_model.dart';
 
 class UsosService {
   late oauth1.AuthorizationResponse temporaryCredentials;
@@ -67,7 +66,7 @@ class UsosService {
     }
   }
 
-  Future<Iterable<Programme>?> getProgrammes() async {
+  Future<Iterable<Group>?> getProgrammes() async {
     try {
       final response = await client.get(Uri.parse(
           "https://apps.usos.pw.edu.pl/services/tt/user?start=2024-10-1&fields=course_id|lecturer_ids|classtype_name|type|name|start_time|end_time"));
@@ -94,7 +93,7 @@ class UsosService {
           lecturers.add([...classgroupLecturers]);
         }
         return classgroups.asMap().entries.map((entry) {
-          return (Programme.fromJson(entry.value as Map<String, dynamic>))
+          return (Group.fromJson(entry.value as Map<String, dynamic>))
               .copyWith(lecturers: lecturers.elementAt(entry.key));
         });
       } else {

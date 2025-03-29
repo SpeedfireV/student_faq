@@ -8,4 +8,5 @@ class ColorPalette {
   static final Color lightBlue = Color(0xff8CC0F5);
   static final Color backgroundColor = Color(0xffF7EBEC);
   static final Color brown = Color(0xff412722);
+  static final Color alertColor = Color(0xff9B1D20);
 }

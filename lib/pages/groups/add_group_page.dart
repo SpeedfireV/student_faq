@@ -1,6 +1,13 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:student_faq/bloc/create_group_bloc/create_group_bloc.dart';
+import 'package:student_faq/bloc/create_group_bloc/create_group_event.dart';
+import 'package:student_faq/bloc/create_group_bloc/create_group_state.dart';
+import 'package:student_faq/consts/color_palette.dart';
+import 'package:student_faq/models/group/group_model.dart';
+
+import '../../widgets/buttons.dart';
 
 class AddGroupPage extends StatefulWidget {
   const AddGroupPage({super.key});
@@ -10,14 +17,75 @@ class AddGroupPage extends StatefulWidget {
 }
 
 class _AddGroupPageState extends State<AddGroupPage> {
+  late TextEditingController groupController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    groupController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    groupController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(child:
-      Column(children: [
-        
-      ElevatedButton(onPressed: () {}, child: Text("Join Using Code"))
-      ],)),
+    return BlocProvider(
+      create: (context) => CreateGroupBloc(),
+      child: Builder(builder: (context) {
+        return BlocConsumer<CreateGroupBloc, CreateGroupState>(
+            listener: (context, state) {
+          if (state is CreateGroupUnsuccessful) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+              state.exception.message ?? "Error Occured",
+              textAlign: TextAlign.center,
+            )));
+          }
+        }, builder: (context, state) {
+          return Scaffold(
+            body: SafeArea(
+                child: Stack(
+              children: [
+                Column(
+                  children: [
+                    TextField(
+                      controller: groupController,
+                      decoration: InputDecoration(
+                        hintText: "Nazwa Grupy",
+                      ),
+                    ),
+                    PrimaryElevatedButton(
+                        function: () async {
+                          BlocProvider.of<CreateGroupBloc>(context).add(
+                              CreateGroupSubmitForm(
+                                  Group(name: groupController.text)));
+                        },
+                        text: "Join Using Code")
+                  ],
+                ),
+                state is CreateGroupParsing
+                    ? Expanded(
+                        child: Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        color: ColorPalette.lightBlue.withOpacity(0.5),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: ColorPalette.brown,
+                          ),
+                        ),
+                      ))
+                    : Container()
+              ],
+            )),
+          );
+        });
+      }),
     );
   }
 }

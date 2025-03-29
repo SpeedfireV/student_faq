@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -19,9 +23,19 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  if (kDebugMode) {
+    // Connect Firestore to Emulator
+    FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
+
+    FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+
+    // Connect Firebase Functions to Emulator
+    FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5001);
+  }
+
   WidgetsFlutterBinding.ensureInitialized();
-  final isUserIntroduced = await UserDataService().isUserIntroduced();
-  MyRouter.setRouter(isUserIntroduced ?? false);
+  MyRouter.setRouter(FirebaseAuth.instance.currentUser !=
+      null); // TODO: Set FirebaseAuth.instance.currentUser != null
   runApp(MultiBlocProvider(
     child: const MainApp(),
     providers: [
@@ -37,7 +51,6 @@ class MainApp extends StatelessWidget {
   const MainApp({super.key});
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp.router(
       theme: ThemeData(
           inputDecorationTheme: InputDecorationTheme(
@@ -65,6 +78,7 @@ class MainApp extends StatelessWidget {
               textStyle: TextStyle(color: ColorPalette.snowWhiteColor),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
+              foregroundColor: ColorPalette.snowWhiteColor,
               backgroundColor: ColorPalette.buttonBackgroundColor,
             ),
           ),

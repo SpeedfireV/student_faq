@@ -3,10 +3,11 @@ import 'package:student_faq/consts/styles/button_styles.dart';
 import 'package:student_faq/consts/styles/text_styles.dart';
 
 import '../consts/color_palette.dart';
+import '../router.dart';
 
 class PrimaryElevatedButton extends StatefulWidget {
-  const PrimaryElevatedButton({super.key, this.function, required this.text});
-  final VoidCallback? function;
+  const PrimaryElevatedButton({super.key,required this.function, required this.text});
+  final VoidCallback function;
   final String text;
 
   @override
@@ -43,5 +44,43 @@ class OpenDrawerButton extends StatelessWidget {
           ),
           heroTag: "sideBar");
     });
+  }
+}
+
+class CustomBackButton extends StatefulWidget {
+  const CustomBackButton({super.key});
+
+  @override
+  State<CustomBackButton> createState() => _CustomBackButtonState();
+}
+
+class _CustomBackButtonState extends State<CustomBackButton> {
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+        onPressed: () {
+          MyRouter.router.pop();
+        },
+        child: Icon(
+          Icons.arrow_back,
+          color: ColorPalette.snowWhiteColor,
+        ),
+        heroTag: "backButton");
+  }
+}
+
+
+class TextIconButton extends StatelessWidget {
+  const TextIconButton({required this.function, required this.text, required this.icon, super.key});
+  final VoidCallback function;
+  final String text;
+  final Icon icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton.icon(onPressed: function, label
+        : Text(text), icon: icon, style: TextButton.styleFrom(
+      foregroundColor: ColorPalette.darkOrangeColor
+    ),);
   }
 }
