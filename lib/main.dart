@@ -23,7 +23,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  if (kDebugMode) {
+  if (false) {
     // Connect Firestore to Emulator
     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
 
