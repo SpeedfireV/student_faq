@@ -4,8 +4,6 @@ part of 'groups_bloc.dart';
 sealed class GroupsEvent {}
 
 class GroupsEventAddGroups extends GroupsEvent {
-  final UsosService usosService;
-  GroupsEventAddGroups(this.usosService);
 }
 
 class GroupsEventAddGroup extends GroupsEvent {}

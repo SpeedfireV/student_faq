@@ -14,9 +14,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       try {
         final UserCredential? userCredential =
             await AuthService.register(event.emailAddress, event.password);
-
-        // await DatabaseService.createUserData(
-        //     FirebaseAuth.instance.currentUser!);
         emit(LoginSuccessful());
       } on FirebaseAuthException catch (e) {
         emit(LoginUnsuccessful(e));

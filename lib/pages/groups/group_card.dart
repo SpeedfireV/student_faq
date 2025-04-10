@@ -36,11 +36,11 @@ class GroupCard extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 8),
-                    Text(
-                        group.lecturers.toString().substring(
-                            1, group.lecturers.toString().length - 1),
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w300)),
+                    // Text(
+                    //     group.lecturers.toString().substring(
+                    //         1, group.lecturers.toString().length - 1),
+                    //     style: TextStyle(
+                    //         fontSize: 14, fontWeight: FontWeight.w300)),
                   ],
                 ),
               ),

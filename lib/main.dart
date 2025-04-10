@@ -10,7 +10,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:student_faq/bloc/drawer_navigation/navigation_cubit.dart';
 import 'package:student_faq/bloc/groups/groups_bloc.dart';
 import 'package:student_faq/bloc/keyboard/keyboard_cubit.dart';
-import 'package:student_faq/bloc/usos_authentication/usos_authentication_bloc.dart';
 import 'package:student_faq/consts/color_palette.dart';
 import 'package:student_faq/router.dart';
 import 'package:student_faq/services/user_data_service.dart';
@@ -39,7 +38,6 @@ void main() async {
   runApp(MultiBlocProvider(
     child: const MainApp(),
     providers: [
-      BlocProvider(create: (context) => UsosAuthenticationBloc()),
       BlocProvider(create: (context) => NavigationCubit()),
       BlocProvider(create: (context) => GroupsBloc()),
       BlocProvider(create: (context) => KeyboardCubit())

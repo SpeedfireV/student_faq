@@ -9,10 +9,12 @@ enum Access { SuperModerator, Moderator, Member, Viewer }
 @freezed
 class Group with _$Group {
   const factory Group(
-      {@JsonKey(name: "name") required String name,
-      @JsonKey(name: "sessions", defaultValue: []) List<String>? sessions,
-      @JsonKey(name: "members") Map<String, Access>? members,
-      List<String>? lecturers}) = _Group;
+      {
+        required String name,
+        @JsonKey(defaultValue: "") String? description,
+        @JsonKey(name: "sessions", defaultValue: []) List<String>? sessions,
+        Map<String, Access>? members,
+        @JsonKey(name: "black_list", defaultValue: []) List<String>? blackList}) = _Group;
 
   factory Group.fromJson(Map<String, Object?> json) => _$GroupFromJson(json);
 }

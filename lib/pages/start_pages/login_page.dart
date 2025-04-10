@@ -4,8 +4,6 @@ import 'package:student_faq/bloc/groups/groups_bloc.dart';
 import 'package:student_faq/bloc/login/login_bloc.dart';
 import 'package:student_faq/bloc/login/login_event.dart';
 import 'package:student_faq/bloc/login/login_state.dart';
-import 'package:student_faq/bloc/usos_authentication/entered_pin_cubit.dart';
-import 'package:student_faq/bloc/usos_authentication/usos_authentication_bloc.dart';
 import 'package:student_faq/consts/color_palette.dart';
 import 'package:student_faq/consts/styles/button_styles.dart';
 import 'package:student_faq/consts/styles/text_styles.dart';
@@ -42,149 +40,112 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => EnteredPinCubit()),
         BlocProvider(create: (context) => LoginBloc())
       ],
-      child: BlocBuilder<EnteredPinCubit, String>(
-        builder: (context, state) {
-          return BlocListener<UsosAuthenticationBloc, UsosAuthenticationState>(
-            listener: (context, state) async {
-              if (state is UsosAuthenticationUserAuthenticated) {
-                BlocProvider.of<GroupsBloc>(context).add(GroupsEventAddGroups(
-                    BlocProvider.of<UsosAuthenticationBloc>(context)
-                        .usosService));
-                await UserDataService().setUserIntroduced();
+      child: Scaffold(
+        body: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) =>
+                BlocConsumer<LoginBloc, LoginState>(
+                    listener: (context, state) {
+              if (state is LoginSuccessful) {
                 MyRouter.router.goNamed(Routes.homePage.name);
+              } else if (state is LoginUnsuccessful) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                  "${state.error.message}",
+                  textAlign: TextAlign.center,
+                )));
               }
-            },
-            child: Scaffold(
-              body: SafeArea(
-                child: LayoutBuilder(
-                  builder: (context, constraints) =>
-                      BlocConsumer<LoginBloc, LoginState>(
-                          listener: (context, state) {
-                    if (state is LoginSuccessful) {
-                      MyRouter.router.goNamed(Routes.homePage.name);
-                    } else if (state is LoginUnsuccessful) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                        "${state.error.message}",
-                        textAlign: TextAlign.center,
-                      )));
-                    }
-                  }, builder: (context, state) {
-                    return Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SingleChildScrollView(
-                            child: ConstrainedBox(
-                              constraints: BoxConstraints(
-                                  minHeight: constraints.maxHeight),
-                              child: IntrinsicHeight(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Icon(
-                                      Icons.login,
-                                      size: 60,
-                                      color: ColorPalette.darkBlue,
-                                    ),
-                                    SizedBox(height: 16),
-                                    Text(
-                                      "LOGOWANIE",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineLarge,
-                                    ),
-                                    Spacer(),
-                                    SizedBox(height: 16),
-                                    TextField(
-                                      controller: loginController,
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        hintText: "Login",
-                                      ),
-                                      onChanged: (String newPin) async {
-                                        if (await BlocProvider.of<
-                                                    EnteredPinCubit>(context)
-                                                .changePin(newPin) ==
-                                            true) {
-                                          BlocProvider.of<
-                                                      UsosAuthenticationBloc>(
-                                                  context)
-                                              .add(
-                                                  UsosAuthenticationAuthenticate(
-                                                      newPin));
-                                        }
-                                      },
-                                      keyboardType: TextInputType.emailAddress,
-                                    ),
-                                    SizedBox(height: 16),
-                                    TextField(
-                                      controller: passwordController,
-                                      obscureText: true,
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        hintText: "Hasło",
-                                      ),
-                                      onChanged: (String newPin) async {
-                                        if (await BlocProvider.of<
-                                                    EnteredPinCubit>(context)
-                                                .changePin(newPin) ==
-                                            true) {
-                                          BlocProvider.of<
-                                                      UsosAuthenticationBloc>(
-                                                  context)
-                                              .add(
-                                                  UsosAuthenticationAuthenticate(
-                                                      newPin));
-                                        }
-                                      },
-                                      keyboardType: TextInputType.text,
-                                    ),
-                                    SizedBox(height: 16),
-                                    const Text("LUB"),
-                                    SizedBox(height: 16),
-                                    ElevatedButton(
-                                        onPressed: () async {
-                                          BlocProvider.of<LoginBloc>(context)
-                                              .add(LoginSubmitForm(
-                                                  loginController.text,
-                                                  passwordController.text));
-                                        },
-                                        style: ButtonStyles
-                                            .primaryInversedElevatedButton,
-                                        child: Text(
-                                          "ZALOGUJ SIĘ",
-                                          style: TextStyles.buttonText,
-                                        ))
-                                  ],
-                                ),
+            }, builder: (context, state) {
+              return Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                            minHeight: constraints.maxHeight),
+                        child: IntrinsicHeight(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Icon(
+                                Icons.login,
+                                size: 60,
+                                color: ColorPalette.darkBlue,
                               ),
-                            ),
+                              SizedBox(height: 16),
+                              Text(
+                                "LOGOWANIE",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineLarge,
+                              ),
+                              Spacer(),
+                              SizedBox(height: 16),
+                              TextField(
+                                controller: loginController,
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: "Login",
+                                ),
+                                onChanged: (String newPin) async {
+
+                                },
+                                keyboardType: TextInputType.emailAddress,
+                              ),
+                              SizedBox(height: 16),
+                              TextField(
+                                controller: passwordController,
+                                obscureText: true,
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  hintText: "Hasło",
+                                ),
+                                onChanged: (String newPin) async {
+                                },
+                                keyboardType: TextInputType.text,
+                              ),
+                              SizedBox(height: 16),
+                              const Text("LUB"),
+                              SizedBox(height: 16),
+                              ElevatedButton(
+                                  onPressed: () async {
+                                    BlocProvider.of<LoginBloc>(context)
+                                        .add(LoginSubmitForm(
+                                            loginController.text,
+                                            passwordController.text));
+                                  },
+                                  style: ButtonStyles
+                                      .primaryInversedElevatedButton,
+                                  child: Text(
+                                    "ZALOGUJ SIĘ",
+                                    style: TextStyles.buttonText,
+                                  ))
+                            ],
                           ),
                         ),
-                        state is LoginParsing
-                            ? Container(
-                                color: ColorPalette.lightBlue.withOpacity(0.4),
-                                width: double.infinity,
-                                height: double.infinity,
-                                child: Center(
-                                    child: CircularProgressIndicator(
-                                  color: ColorPalette.brown,
-                                )),
-                              )
-                            : Container()
-                      ],
-                    );
-                  }),
-                ),
-              ),
-            ),
-          );
-        },
+                      ),
+                    ),
+                  ),
+                  state is LoginParsing
+                      ? Container(
+                          color: ColorPalette.lightBlue.withOpacity(0.4),
+                          width: double.infinity,
+                          height: double.infinity,
+                          child: Center(
+                              child: CircularProgressIndicator(
+                            color: ColorPalette.brown,
+                          )),
+                        )
+                      : Container()
+                ],
+              );
+            }),
+          ),
+        ),
       ),
     );
   }

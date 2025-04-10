@@ -6,6 +6,7 @@ import 'package:student_faq/bloc/create_group_bloc/create_group_event.dart';
 import 'package:student_faq/bloc/create_group_bloc/create_group_state.dart';
 import 'package:student_faq/consts/color_palette.dart';
 import 'package:student_faq/models/group/group_model.dart';
+import 'package:student_faq/router.dart';
 
 import '../../widgets/buttons.dart';
 
@@ -18,11 +19,13 @@ class AddGroupPage extends StatefulWidget {
 
 class _AddGroupPageState extends State<AddGroupPage> {
   late TextEditingController groupController;
+  late TextEditingController descriptionController;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     groupController = TextEditingController();
+    descriptionController = TextEditingController();
   }
 
   @override
@@ -30,6 +33,7 @@ class _AddGroupPageState extends State<AddGroupPage> {
     // TODO: implement dispose
     super.dispose();
     groupController.dispose();
+    descriptionController.dispose();
   }
 
   @override
@@ -45,6 +49,8 @@ class _AddGroupPageState extends State<AddGroupPage> {
               state.exception.message ?? "Error Occured",
               textAlign: TextAlign.center,
             )));
+          } else if (state is CreateGroupSuccessful) {
+            MyRouter.router.pop();
           }
         }, builder: (context, state) {
           return Scaffold(
@@ -59,11 +65,18 @@ class _AddGroupPageState extends State<AddGroupPage> {
                         hintText: "Nazwa Grupy",
                       ),
                     ),
+                    TextField(
+                      controller: descriptionController,
+                      decoration: InputDecoration(
+                        hintText: "Opis Grupy",
+                      ),
+                    ),
+
                     PrimaryElevatedButton(
                         function: () async {
                           BlocProvider.of<CreateGroupBloc>(context).add(
                               CreateGroupSubmitForm(
-                                  Group(name: groupController.text)));
+                                  Group(name: groupController.text, description: descriptionController.text)));
                         },
                         text: "Join Using Code")
                   ],

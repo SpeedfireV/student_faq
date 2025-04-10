@@ -12,10 +12,10 @@ class GroupsBloc extends Bloc<GroupsEvent, GroupsState> {
     on<GroupsEventAddGroups>((event, emit) async {
       emit(GroupsStateAddingGroups());
       try {
-        var fetchedGroups = await event.usosService.getProgrammes();
-        if (fetchedGroups != null) {
-          groups = fetchedGroups;
-        }
+        // var fetchedGroups = await event.usosService.getProgrammes();
+        // if (fetchedGroups != null) {
+        //   groups = fetchedGroups;
+        // }
       } catch (e) {
         emit(GroupsStateError(e.toString()));
       }

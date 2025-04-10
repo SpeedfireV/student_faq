@@ -3,8 +3,8 @@
 # Deploy with `firebase deploy`
 from random import randint
 
-from firebase_functions import https_fn, identity_fn
-from firebase_admin import initialize_app, firestore
+from firebase_functions import https_fn, identity_fn, firestore_fn
+from firebase_admin import initialize_app, firestore, auth
 import requests
 
 initialize_app()
@@ -29,8 +29,15 @@ def on_user_created(before_user: identity_fn.AuthBlockingEvent) -> identity_fn.B
     db = firestore.client()
     doc_ref = db.collection('users').document(before_user.data.uid)
     users_data = {
-        "name":get_random_name(),
+        "name": get_random_name(),
         "groups": [],
         "meetings": []
     }
     doc_ref.set(users_data)
+
+# @firestore_fn.on_document_created(document='users')
+# def on_group_created(event: firestore_fn.Event[firestore_fn.DocumentSnapshot]):
+#     # event.data.
+#     # db = firestore.client()
+#     # db.collection('users').document()
+#     # event.document
