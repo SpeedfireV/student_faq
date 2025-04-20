@@ -7,7 +7,7 @@ class CreateGroupInitial extends CreateGroupState {}
 class CreateGroupParsing extends CreateGroupState {}
 
 class CreateGroupError extends CreateGroupState {
-  final exception;
+  final Exception exception;
   CreateGroupError(this.exception);
 }
 

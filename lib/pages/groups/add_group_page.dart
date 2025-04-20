@@ -49,7 +49,14 @@ class _AddGroupPageState extends State<AddGroupPage> {
               state.exception.message ?? "Error Occured",
               textAlign: TextAlign.center,
             )));
-          } else if (state is CreateGroupSuccessful) {
+          } else if (state is CreateGroupError) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                  state.exception.toString(),
+                  textAlign: TextAlign.center,
+                )));
+          }
+          else if (state is CreateGroupSuccessful) {
             MyRouter.router.pop();
           }
         }, builder: (context, state) {

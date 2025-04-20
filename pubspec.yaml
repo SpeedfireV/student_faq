@@ -55,7 +55,7 @@ dependencies:
   cloud_firestore: ^5.6.5
   firebase_auth: ^5.5.1
   word_generator: ^0.4.6
-  cloud_functions: ^5.3.4
+  cloud_functions: ^5.4.0
 
 dev_dependencies:
   flutter_test:

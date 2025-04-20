@@ -32,6 +32,23 @@ class DatabaseService {
       rethrow;
     }
   }
+  
+  static Future<Iterable<Group>> getGroups() async {
+    try {
+      var currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser == null) {
+        throw FirebaseAuthException(code: "User is not logged in!");
+      }
+      var userGroups = await db.collection(groups).doc(currentUser.uid).get();
+     return userGroups.data()!["groups"];
+    }
+    on FirebaseException catch (e) {
+      rethrow;
+    }
+    on Exception catch (e){
+      rethrow;
+    }
+  }
 
   // static assignGroupToUser() async {
   //   try {

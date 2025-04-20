@@ -135,19 +135,19 @@
     },
     {
       "name": "cloud_functions",
-      "rootUri": "file:///C:/Users/grzeg/AppData/Local/Pub/Cache/hosted/pub.dev/cloud_functions-5.3.4",
+      "rootUri": "file:///C:/Users/grzeg/AppData/Local/Pub/Cache/hosted/pub.dev/cloud_functions-5.4.0",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
     {
       "name": "cloud_functions_platform_interface",
-      "rootUri": "file:///C:/Users/grzeg/AppData/Local/Pub/Cache/hosted/pub.dev/cloud_functions_platform_interface-5.6.4",
+      "rootUri": "file:///C:/Users/grzeg/AppData/Local/Pub/Cache/hosted/pub.dev/cloud_functions_platform_interface-5.6.5",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
     {
       "name": "cloud_functions_web",
-      "rootUri": "file:///C:/Users/grzeg/AppData/Local/Pub/Cache/hosted/pub.dev/cloud_functions_web-4.10.10",
+      "rootUri": "file:///C:/Users/grzeg/AppData/Local/Pub/Cache/hosted/pub.dev/cloud_functions_web-4.10.11",
       "packageUri": "lib/",
       "languageVersion": "3.4"
     },
@@ -237,7 +237,7 @@
     },
     {
       "name": "firebase_core",
-      "rootUri": "file:///C:/Users/grzeg/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core-3.12.1",
+      "rootUri": "file:///C:/Users/grzeg/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core-3.13.0",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -249,7 +249,7 @@
     },
     {
       "name": "firebase_core_web",
-      "rootUri": "file:///C:/Users/grzeg/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core_web-2.21.1",
+      "rootUri": "file:///C:/Users/grzeg/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core_web-2.22.0",
       "packageUri": "lib/",
       "languageVersion": "3.4"
     },
@@ -782,7 +782,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-04-10T12:47:26.815811Z",
+  "generated": "2025-04-20T17:18:28.148439Z",
   "generator": "pub",
   "generatorVersion": "3.7.0",
   "flutterRoot": "file:///C:/Users/grzeg/flutter",
