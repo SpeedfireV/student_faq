@@ -25,6 +25,7 @@ class _GroupsPageState extends State<GroupsPage> {
       create: (context) => SearchBarCubit(),
       child: Builder(
         builder: (context) {
+          BlocProvider.of<GroupsBloc>(context).add(GroupsEventFetchGroupsUids());
           return Scaffold(
               drawer: PagesDrawer(),
               floatingActionButton: FloatingActionButton.large(
@@ -187,8 +188,9 @@ class _GroupsPageState extends State<GroupsPage> {
                         alignment: Alignment.topCenter,
                         child: BlocBuilder<GroupsBloc, GroupsState>(
                             builder: (context, state) {
+                              BlocProvider.of<GroupsBloc>(context).add(GroupsEventFetchNextGroups());
                           if (state is GroupsStateFetched) {
-                            print(BlocProvider.of<GroupsBloc>(context).groups);
+
                             return ListView(
                               children: [ListView.separated(
                                 shrinkWrap: true,

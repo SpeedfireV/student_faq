@@ -16,5 +16,5 @@ class Group with _$Group {
         Map<String, Access>? members,
         @JsonKey(name: "black_list", defaultValue: []) List<String>? blackList}) = _Group;
 
-  factory Group.fromJson(Map<String, Object?> json) => _$GroupFromJson(json);
+  factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);
 }

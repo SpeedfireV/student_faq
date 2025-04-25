@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:student_faq/models/answer/answer_model.dart';
 import 'package:student_faq/models/meeting/meeting_model.dart';
 import 'package:student_faq/models/student_info/student_info.dart';
@@ -11,7 +12,7 @@ import '../models/question/question_model.dart';
 class DatabaseService {
   static final db = FirebaseFirestore.instance; // TODO: Add Database
   static const String groups = "groups";
-  static const String students = "students"; // TODO: Change to 'users' field
+  static const String users = "users"; // TODO: Change to 'users' field
   static const String meetings = "meetings";
   static const String questions = "questions";
   static const String answers = "answers";
@@ -32,15 +33,35 @@ class DatabaseService {
       rethrow;
     }
   }
+
+  static Future<List<String>> getGroupsUids() async {
+    try {
+      return db.collection(users) .doc(FirebaseAuth.instance.currentUser!.uid).get().then((v) {
+        try {
+          return List<String>.from( v.data()!['groups']);
+        } catch (e) {
+          rethrow;
+        }
+      });
+    }
+    on FirebaseAuthException catch (e) {
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
+  }
   
-  static Future<Iterable<Group>> getGroups() async {
+  static Future<Group> getGroup(String uid) async {
     try {
       var currentUser = FirebaseAuth.instance.currentUser;
       if (currentUser == null) {
         throw FirebaseAuthException(code: "User is not logged in!");
       }
-      var userGroups = await db.collection(groups).doc(currentUser.uid).get();
-     return userGroups.data()!["groups"];
+      var userGroups = await db.collection(groups).doc(uid).get();
+      if (userGroups.data() == null) {
+        throw Exception("Group doesn't exist!");
+      }
+     return Group.fromJson(userGroups.data()!);
     }
     on FirebaseException catch (e) {
       rethrow;
