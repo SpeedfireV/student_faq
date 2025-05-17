@@ -89,6 +89,7 @@ def delete_group(req: https_fn.CallableRequest):
         raise https_fn.HttpsError(code=https_fn.FunctionsErrorCode.PERMISSION_DENIED, message="User is not a member of the group!")
 
 
+
 @identity_fn.before_user_created()
 def on_user_created(before_user: identity_fn.AuthBlockingEvent) -> identity_fn.BeforeCreateResponse | None:
     def get_random_name() -> str:
