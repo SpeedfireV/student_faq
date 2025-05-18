@@ -15,14 +15,16 @@ class GroupsBloc extends Bloc<GroupsEvent, GroupsState> {
 
     on<GroupsEventFetchGroupsUids>((event, emit) async {
       groupsUids = await DatabaseService.getGroupsUids();
-
     });
     on<GroupsEventFetchNextGroups>((event, emit) async {
       emit(GroupsStateAddingGroups());
       try {
         int loadedGroupsNumber = groups.length;
-        Iterable<String> uidsOfGroupsToBeLoaded = groupsUids.toList().sublist(loadedGroupsNumber, loadedGroupsNumber + 3);
-        for (String uid in uidsOfGroupsToBeLoaded) {
+        final allUids = groupsUids.toList();
+        final end = (loadedGroupsNumber + 3).clamp(0, allUids.length);
+        final uidsToLoad = allUids.sublist(loadedGroupsNumber, end);
+
+        for (String uid in uidsToLoad) {
           groups.add(await DatabaseService.getGroup(uid));
         }
       } catch (e) {

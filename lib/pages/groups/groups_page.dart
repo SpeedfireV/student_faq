@@ -19,13 +19,21 @@ class GroupsPage extends StatefulWidget {
 }
 
 class _GroupsPageState extends State<GroupsPage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    BlocProvider.of<GroupsBloc>(context).add(GroupsEventFetchGroupsUids());
+    BlocProvider.of<GroupsBloc>(context).add(GroupsEventFetchNextGroups());
+  }
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SearchBarCubit(),
       child: Builder(
         builder: (context) {
-          BlocProvider.of<GroupsBloc>(context).add(GroupsEventFetchGroupsUids());
+
           return Scaffold(
               drawer: PagesDrawer(),
               floatingActionButton: FloatingActionButton.large(
@@ -188,9 +196,8 @@ class _GroupsPageState extends State<GroupsPage> {
                         alignment: Alignment.topCenter,
                         child: BlocBuilder<GroupsBloc, GroupsState>(
                             builder: (context, state) {
-                              BlocProvider.of<GroupsBloc>(context).add(GroupsEventFetchNextGroups());
-                          if (state is GroupsStateFetched) {
 
+                          if (state is GroupsStateFetched) {
                             return ListView(
                               children: [ListView.separated(
                                 shrinkWrap: true,

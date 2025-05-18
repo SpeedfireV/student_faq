@@ -36,13 +36,10 @@ class DatabaseService {
 
   static Future<List<String>> getGroupsUids() async {
     try {
-      return db.collection(users) .doc(FirebaseAuth.instance.currentUser!.uid).get().then((v) {
-        try {
-          return List<String>.from( v.data()!['groups']);
-        } catch (e) {
-          rethrow;
-        }
-      });
+      var uid = FirebaseAuth.instance.currentUser!.uid;
+      var doc = await db.collection(users).doc(uid).get();
+      return List<String>.from(doc.data()!['groups'] ?? []);
+
     }
     on FirebaseAuthException catch (e) {
       rethrow;

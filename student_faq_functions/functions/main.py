@@ -73,7 +73,6 @@ def delete_group(req: https_fn.CallableRequest):
     if members.get(user_uid) is not None and (members[user_uid] == "SuperModerator" or members[user_uid] == "Moderator"):
         # Delete user-group relationship
         try:
-
             for user_uid in members.keys():
                 user_doc = db.collection('users').document(user_uid)
                 updated_groups = user_doc.get(["groups"]).to_dict()["groups"].remove(str(group_uid))
@@ -88,7 +87,15 @@ def delete_group(req: https_fn.CallableRequest):
     else:
         raise https_fn.HttpsError(code=https_fn.FunctionsErrorCode.PERMISSION_DENIED, message="User is not a member of the group!")
 
+@firestore_fn.on_document_created(document="groups/{group}/sessions/{session}")
+def on_session_created(doc: firestore_fn.DocumentSnapshot, _: firestore_fn.DocumentReference) -> None:
+    pass
 
+
+
+@firestore_fn.on_document_updated(document="groups/{group}/sessions/{session}")
+def on_session_updated(doc: firestore_fn.DocumentSnapshot, _: firestore_fn.DocumentReference) -> None:
+    pass
 
 @identity_fn.before_user_created()
 def on_user_created(before_user: identity_fn.AuthBlockingEvent) -> identity_fn.BeforeCreateResponse | None:
