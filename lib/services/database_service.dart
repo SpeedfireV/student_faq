@@ -68,33 +68,41 @@ class DatabaseService {
     }
   }
 
-  // static assignGroupToUser() async {
-  //   try {
-  //     await db.collection()
-  //   }
-  // }
+  static Future<List<Meeting>> getMeetings(String groupId, Meeting? lastFetchedMeeting) async {
+    try {
+      var group = db.collection(groups).doc(groupId);
 
-  // static createMeeting(Group group, Meeting meeting) async {
-  //   if (group.groupId != null) {
-  //     DocumentReference doc = await db
-  //         .collection(groups)
-  //         .doc(group.groupId)
-  //         .collection(meetings)
-  //         .add(meeting.toJson())
-  //         .then((DocumentReference doc) {
-  //       print('DocumentSnapshot added with ID: ${doc.id}');
-  //       return doc;
-  //     });
-  //   }
-  // }
+      var orderedMeetings = group.collection(meetings).orderBy("creation_date", descending: true);
 
-  static Meeting getSession(String sessionId) {
-    return Meeting(
-        sessionName: "sessionName",
-        questions: [],
-        sessionId: '',
-        likes: 0); // TODO: Add Session Fetching
+      if (lastFetchedMeeting != null) {
+
+        orderedMeetings = orderedMeetings.startAfter([lastFetchedMeeting.creationDate]);
+
+      }
+        orderedMeetings.limit(10);
+
+        return (await orderedMeetings.get()).docs.map((v) {
+          return Meeting.fromJson(v.data());
+        }).toList();
+
+    } on FirebaseException catch (e) {
+      rethrow;
+    } on Exception catch (e) {
+      rethrow;
+    }
   }
+
+  static Future<Meeting> getMeeting(String groupId, String meetingId) async {
+    try {
+      var group = db.collection(groups).doc(groupId);
+      var meeting = group.collection(meetings).doc(meetingId);
+      return Meeting.fromJson((await meeting.get()).data()!);
+    }
+    on FirebaseException catch (e) {
+      rethrow;
+    } on Exception catch (e) {
+      rethrow;
+    }
 
   // static addAnswer(
   //     Group group, Meeting meeting, Question question, Answer answer) async {

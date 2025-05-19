@@ -11,7 +11,10 @@ class Meeting with _$Meeting {
     required String sessionId,
     required String sessionName,
     required List<Question> questions,
+    required DateTime creationDate,
+
     required int likes,
+    DateTime? endDate,
     String? meetingId,
   }) = _Meeting;
 
