@@ -24,16 +24,27 @@ class _GroupsPageState extends State<GroupsPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    BlocProvider.of<GroupsBloc>(context).add(GroupsEventFetchGroupsUids());
-    BlocProvider.of<GroupsBloc>(context).add(GroupsEventFetchNextGroups());
+
+
   }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+
+
+  }
+
   @override
   Widget build(BuildContext context) {
+
+
     return BlocProvider(
       create: (context) => SearchBarCubit(),
       child: Builder(
         builder: (context) {
-
+          BlocProvider.of<GroupsBloc>(context).add(GroupsEventFetchNextGroups());
           return Scaffold(
               drawer: PagesDrawer(),
               floatingActionButton: FloatingActionButton.large(
@@ -180,17 +191,6 @@ class _GroupsPageState extends State<GroupsPage> {
                       ],
                     ),
                     SizedBox(height: 16),
-                    // Text(
-                    //   "2024L",
-                    //   style: TextStyle(
-                    //       fontSize: 21,
-                    //       fontWeight: FontWeight.w600,
-                    //       color: ColorPalette.brown),
-                    // ),
-                    // Divider(
-                    //   thickness: 2,
-                    //   color: ColorPalette.brown,
-                    // ),
                     Expanded(
                       child: Align(
                         alignment: Alignment.topCenter,
@@ -206,6 +206,7 @@ class _GroupsPageState extends State<GroupsPage> {
                                     group: BlocProvider.of<GroupsBloc>(context)
                                         .groups
                                         .elementAt(index),
+                                    groupId: BlocProvider.of<GroupsBloc>(context).groupsUids.elementAt(index),
                                   );
                                 },
                                 separatorBuilder: (context, index) {
@@ -230,21 +231,7 @@ class _GroupsPageState extends State<GroupsPage> {
                             ) {
                               return Row(mainAxisAlignment: MainAxisAlignment.center,children: [Text("Nie jesteś jeszcze w żadnej grupie ;/")]);
                             }
-                          return ListView.separated(
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return GroupCard(
-                                group: BlocProvider.of<GroupsBloc>(context)
-                                    .groups
-                                    .elementAt(index),
-                              );
-                            },
-                            separatorBuilder: (context, index) {
-                              return SizedBox(height: 16);
-                            },
-                            itemCount:
-                            BlocProvider.of<GroupsBloc>(context).groups.length,
-                          );
+                          return Text("Something went wrong! :/");
                         }),
                       ),
                     )

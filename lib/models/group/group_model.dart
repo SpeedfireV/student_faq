@@ -12,7 +12,7 @@ class Group with _$Group {
       {
         required String name,
         @JsonKey(defaultValue: "") String? description,
-        @JsonKey(name: "sessions", defaultValue: []) List<String>? sessions,
+        @JsonKey(name: "meetings", defaultValue: []) List<String>? meetings,
         Map<String, Access>? members,
         @JsonKey(name: "black_list", defaultValue: []) List<String>? blackList}) = _Group;
 

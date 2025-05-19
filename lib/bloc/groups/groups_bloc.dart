@@ -12,13 +12,10 @@ class GroupsBloc extends Bloc<GroupsEvent, GroupsState> {
   List<Group> groups = [];
   Iterable<String> groupsUids = [];
   GroupsBloc() : super(GroupsInitial()) {
-
-    on<GroupsEventFetchGroupsUids>((event, emit) async {
-      groupsUids = await DatabaseService.getGroupsUids();
-    });
     on<GroupsEventFetchNextGroups>((event, emit) async {
       emit(GroupsStateAddingGroups());
       try {
+        groupsUids = await DatabaseService.getGroupsUids();
         int loadedGroupsNumber = groups.length;
         final allUids = groupsUids.toList();
         final end = (loadedGroupsNumber + 3).clamp(0, allUids.length);

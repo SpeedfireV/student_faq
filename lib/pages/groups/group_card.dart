@@ -5,8 +5,9 @@ import 'package:student_faq/router.dart';
 import '../../models/group/group_model.dart';
 
 class GroupCard extends StatelessWidget {
-  const GroupCard({super.key, required this.group});
+  const GroupCard({super.key, required this.group, required this.groupId});
   final Group group;
+  final String groupId;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class GroupCard extends StatelessWidget {
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
               onTap: () {
-                MyRouter.router.push("/meetings");
+                MyRouter.router.pushNamed("meetings", pathParameters: {"groupId": groupId});
               },
               child: Padding(
                 padding:
@@ -36,11 +37,6 @@ class GroupCard extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 8),
-                    // Text(
-                    //     group.lecturers.toString().substring(
-                    //         1, group.lecturers.toString().length - 1),
-                    //     style: TextStyle(
-                    //         fontSize: 14, fontWeight: FontWeight.w300)),
                   ],
                 ),
               ),

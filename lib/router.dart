@@ -78,9 +78,10 @@ class MyRouter {
                     MaterialPage(child: JoinGroupPage()))
           ]),
       GoRoute(
-          path: Routes.meetings.path,
+          path: Routes.meetings.path + "/:groupId",
           name: Routes.meetings.name,
-          pageBuilder: (context, state) => MaterialPage(child: MeetingsPage()),
+
+          pageBuilder: (context, state) => MaterialPage(child: MeetingsPage(groupId: state.pathParameters["groupId"]!)),
           routes: [
             GoRoute(
                 path: Routes.meeting.path,

@@ -1,10 +1,13 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_faq/consts/color_palette.dart';
 import 'package:student_faq/consts/styles/text_styles.dart';
 import 'package:student_faq/input_bar.dart';
 import 'package:student_faq/router.dart';
 
+import '../../bloc/meetings/meetings_bloc.dart';
 import '../../widgets/buttons.dart';
 
 class MeetingPage extends StatefulWidget {
@@ -15,6 +18,12 @@ class MeetingPage extends StatefulWidget {
 }
 
 class _MeetingPageState extends State<MeetingPage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +71,7 @@ class _MeetingPageState extends State<MeetingPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        Column(
+                                        const Column(
                                           mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -84,7 +93,8 @@ class _MeetingPageState extends State<MeetingPage> {
                                                     style: TextStyle(
                                                         fontSize: 14,
                                                         fontWeight:
-                                                            FontWeight.w300)),
+                                                            FontWeight.w300)
+                                                ),
                                               ],
                                             ),
                                           ],

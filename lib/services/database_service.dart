@@ -10,10 +10,10 @@ import '../models/group/group_model.dart';
 import '../models/question/question_model.dart';
 
 class DatabaseService {
-  static final db = FirebaseFirestore.instance; // TODO: Add Database
+  static final db = FirebaseFirestore.instance;
   static const String groups = "groups";
-  static const String users = "users"; // TODO: Change to 'users' field
-  static const String meetings = "meetings";
+  static const String users = "users";
+  static const String meetings = "sessions"; // TODO: Change to meetings + change create_session in Firebase Functions
   static const String questions = "questions";
   static const String answers = "answers";
   static createGroup(Group group) async {
@@ -43,7 +43,7 @@ class DatabaseService {
     }
     on FirebaseAuthException catch (e) {
       rethrow;
-    } catch (e) {
+    } on Exception catch (e) {
       rethrow;
     }
   }
@@ -103,7 +103,7 @@ class DatabaseService {
     } on Exception catch (e) {
       rethrow;
     }
-
+  }
   // static addAnswer(
   //     Group group, Meeting meeting, Question question, Answer answer) async {
   //   if (group.groupId != null && meeting.meetingId != null) {
