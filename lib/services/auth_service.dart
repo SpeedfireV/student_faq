@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 class AuthService {
   static Future<UserCredential?> logIn(
       String emailAddress, String password) async {
-    debugPrint("working");
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailAddress,

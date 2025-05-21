@@ -8,6 +8,9 @@ part 'question_model.g.dart';
 @freezed
 class Question with _$Question {
   const factory Question({
+    @JsonKey(includeToJson: false, includeFromJson: false) String? groupUid,
+    @JsonKey(includeToJson: false, includeFromJson: false) String? meetingUid,
+    @JsonKey(includeToJson: false, includeFromJson: false) String? uid,
     required String questionName,
     required List<Answer> answers,
     required DateTime dateTime,

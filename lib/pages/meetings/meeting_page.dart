@@ -5,13 +5,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_faq/consts/color_palette.dart';
 import 'package:student_faq/consts/styles/text_styles.dart';
 import 'package:student_faq/input_bar.dart';
+import 'package:student_faq/models/meeting/meeting_model.dart';
 import 'package:student_faq/router.dart';
 
 import '../../bloc/meetings/meetings_bloc.dart';
 import '../../widgets/buttons.dart';
 
 class MeetingPage extends StatefulWidget {
-  const MeetingPage({super.key});
+  const MeetingPage({super.key, required this.groupId, required this.meetingId});
+  final String groupId;
+  final String meetingId;
+
 
   @override
   State<MeetingPage> createState() => _MeetingPageState();
@@ -56,7 +60,7 @@ class _MeetingPageState extends State<MeetingPage> {
                               borderRadius: BorderRadius.circular(10),
                               onTap: () {
                                 MyRouter.router
-                                    .push("/meetings/meeting/responses");
+                                    .pushNamed(Routes.responses.name, pathParameters: {"groupId": widget.groupId, "meetingId": widget.meetingId});
                               },
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -168,7 +172,7 @@ class _MeetingPageState extends State<MeetingPage> {
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
-                    child: InputBar("Zapytaj")),
+                    child: InputBar("Zapytaj", sendFunction: () {},)),
               )
             ],
           ),

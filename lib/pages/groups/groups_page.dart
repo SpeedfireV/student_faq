@@ -19,23 +19,6 @@ class GroupsPage extends StatefulWidget {
 }
 
 class _GroupsPageState extends State<GroupsPage> {
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-
-
-  }
-
   @override
   Widget build(BuildContext context) {
 

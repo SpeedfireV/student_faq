@@ -53,7 +53,7 @@ class _ResponsesPageState extends State<ResponsesPage> {
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: Align(
-                  alignment: Alignment.bottomCenter, child: InputBar("Odpowiedz")),
+                  alignment: Alignment.bottomCenter, child: InputBar("Odpowiedz", sendFunction: () {})),
             )
           ],
         ),

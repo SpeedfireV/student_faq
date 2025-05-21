@@ -9,11 +9,12 @@ part 'meetings_state.dart';
 
 class MeetingsBloc extends Bloc<MeetingsEvent, MeetingsState> {
   List<Meeting> fetchedMeetings = [];
+  List<String> meetingsUids = [];
   MeetingsBloc() : super(MeetingsInitial()) {
     on<FetchMoreMeetingsEvent>((event, emit) async {
       emit(FetchingMeetingsState());
-      try {
-        fetchedMeetings.addAll((await DatabaseService.getMeetings(event.groupId, fetchedMeetings.isNotEmpty ? fetchedMeetings.last : null)));
+      try {var a = (await DatabaseService.getMeetings(event.groupId, fetchedMeetings.isNotEmpty ? fetchedMeetings.last : null));
+        fetchedMeetings.addAll(a);
             emit(SuccessfullyFetchedMeetingsState(false)); // TODO : If already fetched all docs then true
 
         } on FirebaseException catch (e) {

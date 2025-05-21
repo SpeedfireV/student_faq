@@ -6,8 +6,11 @@ import 'package:student_faq/consts/styles/button_styles.dart';
 import 'package:student_faq/consts/styles/text_styles.dart';
 import 'package:student_faq/models/meeting/meeting_model.dart';
 import 'package:student_faq/pages/meetings/meeting_card.dart';
+import 'package:student_faq/router.dart';
 import 'package:student_faq/widgets/pages_drawer.dart';
 import 'package:student_faq/widgets/search_bar.dart';
+
+import '../../utils/utils.dart';
 
 class MeetingsPage extends StatefulWidget {
   const MeetingsPage({super.key, required this.groupId });
@@ -35,7 +38,9 @@ class _MeetingsPageState extends State<MeetingsPage> {
       return Scaffold(
           drawer: PagesDrawer(),
           floatingActionButton: FloatingActionButton.large(
-            onPressed: () {},
+            onPressed: () {
+              MyRouter.router.goNamed(Routes.addMeeting.name, pathParameters: {"groupId": widget.groupId});
+            },
             child: Icon(
               Icons.add,
               color: ColorPalette.snowWhiteColor,
@@ -97,40 +102,72 @@ class _MeetingsPageState extends State<MeetingsPage> {
                   ],
                 ),
                 SizedBox(height: 16),
-                Text(
-                  "15.02.2025",
-                  style: TextStyle(
-                      fontSize: 21,
-                      fontWeight: FontWeight.w600,
-                      color: ColorPalette.brown),
-                ),
-                Divider(
-                  thickness: 2,
-                  color: ColorPalette.brown,
-                ),
-
-                Builder(
-                  builder: (context) {
-                    return BlocBuilder<MeetingsBloc, MeetingsState>(builder: (context, state) {
-                      print(state);
-                      if (state is FetchingMeetingsState) {
-                        return Center(child: CircularProgressIndicator());
-                      }
-                      if (state is SuccessfullyFetchedMeetingsState) {
-                        return ListView.separated(itemBuilder: (context, index) {
-                          return MeetingCard();
-                        }, separatorBuilder: (context, index) {
-                          return SizedBox(height: 16);
-                        }, itemCount: BlocProvider.of<MeetingsBloc>(context).fetchedMeetings.length);
-                      }
-                      if (state is FailedToFetchMeetingsState) {
-                        return Text("Error occured fetching meetings!\n:/");
-                      }
-                      return Text("Something went wrong :/");
 
 
-                    });
-                  }
+                Expanded(
+                  child: Builder(
+                    builder: (context) {
+                      return BlocBuilder<MeetingsBloc, MeetingsState>(builder: (context, state) {
+                        if (state is FetchingMeetingsState) {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                        if (state is SuccessfullyFetchedMeetingsState) {
+                          List<Meeting> meetings = BlocProvider.of<MeetingsBloc>(context).fetchedMeetings;
+                          final Map<DateTime, int> dates = {};
+                          int alreadyLoadedMeetingsCount = -1;
+                          for (var meeting in meetings) {
+                            final date = DateTime(meeting.creationDate.year, meeting.creationDate.month, meeting.creationDate.day);
+                            dates.update(date, (count) => count + 1, ifAbsent: () => 1);
+                          }
+
+                          return ListView.separated(
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: dates.length,
+                            separatorBuilder: (context, index) => SizedBox(height: 40),
+                            itemBuilder: (context, index) {
+                              var dateKey = dates.keys.elementAt(index);
+                              return Column
+                           (
+                              mainAxisSize: MainAxisSize.min,
+
+                              children: [
+                                Row(
+                            mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                      Utils.getDateString(dateKey),
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: 21,
+                                          fontWeight: FontWeight.w600,
+                                          color: ColorPalette.brown),
+                                    ),
+                                  ],
+                                ),
+                                Divider(
+                                  thickness: 2,
+                                  color: ColorPalette.brown,
+                                ),
+                                ListView.separated(shrinkWrap: true,itemBuilder: (context, index) {
+                                  alreadyLoadedMeetingsCount += 1;
+                                  return MeetingCard(meeting: meetings.elementAt(alreadyLoadedMeetingsCount));
+                                }, separatorBuilder: (context, index) {
+                                  return SizedBox(height: 16);
+                                }, itemCount: dates[dateKey]!),
+                              ],
+                            );
+                            }
+                          );
+                        }
+                        if (state is FailedToFetchMeetingsState) {
+                          return Text("Error occured fetching meetings!\n:/");
+                        }
+                        return Text("Something went wrong :/");
+                  
+                  
+                      });
+                    }
+                  ),
                 ),
               ],
             ),

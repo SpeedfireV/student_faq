@@ -10,6 +10,7 @@ enum Access { SuperModerator, Moderator, Member, Viewer }
 class Group with _$Group {
   const factory Group(
       {
+        @JsonKey(includeToJson: false, includeFromJson: false) String? uid,
         required String name,
         @JsonKey(defaultValue: "") String? description,
         @JsonKey(name: "meetings", defaultValue: []) List<String>? meetings,

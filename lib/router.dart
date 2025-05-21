@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:student_faq/pages/groups/add_group_page.dart';
 import 'package:student_faq/pages/groups/join_group_page.dart';
+import 'package:student_faq/pages/meetings/add_meeting_page.dart';
 import 'package:student_faq/pages/meetings/meetings_page.dart';
 import 'package:student_faq/pages/home_page.dart';
 import 'package:student_faq/pages/groups/groups_page.dart';
@@ -31,6 +32,7 @@ class Routes {
   static const RouteDetails addGroup = RouteDetails("/add_group", "addGroup");
   static const RouteDetails meetings = RouteDetails("/meetings", "meetings");
   static const RouteDetails meeting = RouteDetails("/meeting", "meeting");
+  static const RouteDetails addMeeting = RouteDetails("/add_meeting", "addMeeting");
   static const RouteDetails responses = RouteDetails("/responses", "responses");
   static const RouteDetails universities =
       RouteDetails("/universities", "universities");
@@ -47,21 +49,6 @@ class MyRouter {
           pageBuilder: (context, state) => MaterialPage(
               child: isUserInitialized ? const HomePage() : StartPages())),
       GoRoute(
-          path: Routes.homePage.path,
-          pageBuilder: (context, state) => MaterialPage(child: HomePage()),
-          routes: [
-            GoRoute(
-                path: Routes.joinSession.path,
-                name: Routes.joinSession.name,
-                pageBuilder: (context, state) =>
-                    MaterialPage(child: JoinSessionPage())),
-            GoRoute(
-                path: Routes.sessionPage.path,
-                name: Routes.sessionPage.name,
-                pageBuilder: (context, state) =>
-                    MaterialPage(child: MeetingPage())),
-          ]),
-      GoRoute(
           path: Routes.groups.path,
           name: Routes.groups.name,
           pageBuilder: (context, state) => MaterialPage(child: GroupsPage()),
@@ -75,28 +62,31 @@ class MyRouter {
                 path: Routes.joinGroup.path,
                 name: Routes.joinGroup.name,
                 pageBuilder: (context, state) =>
-                    MaterialPage(child: JoinGroupPage()))
-          ]),
-      GoRoute(
-          path: Routes.meetings.path + "/:groupId",
-          name: Routes.meetings.name,
-
-          pageBuilder: (context, state) => MaterialPage(child: MeetingsPage(groupId: state.pathParameters["groupId"]!)),
-          routes: [
+                    MaterialPage(child: JoinGroupPage())),
             GoRoute(
-                path: Routes.meeting.path,
-                name: Routes.meeting.name,
-                pageBuilder: (context, state) =>
-                    MaterialPage(child: MeetingPage()),
+                path: Routes.meetings.path + "/:groupId",
+                name: Routes.meetings.name,
+
+                pageBuilder: (context, state) => MaterialPage(child: MeetingsPage(groupId: state.pathParameters["groupId"]!)),
                 routes: [
+                  GoRoute(path: Routes.addMeeting.path, name: Routes.addMeeting.name, pageBuilder: (context, state) => MaterialPage(child: AddMeetingPage(groupId: state.pathParameters["groupId"]!))),
                   GoRoute(
-                    path: Routes.responses.path,
-                    name: Routes.responses.name,
-                    pageBuilder: (context, state) =>
-                        MaterialPage(child: ResponsesPage()),
-                  )
-                ])
+                      path: Routes.meeting.path + "/:meetingId",
+                      name: Routes.meeting.name,
+                      pageBuilder: (context, state) =>
+                          MaterialPage(child: MeetingPage(groupId: state.pathParameters["groupId"]!, meetingId: state.pathParameters["meetingId"]!)),
+                      routes: [
+                        GoRoute(
+                          path: Routes.responses.path,
+                          name: Routes.responses.name,
+                          pageBuilder: (context, state) =>
+                              MaterialPage(child: ResponsesPage()),
+                        )
+                      ])
+                ]),
+
           ]),
+
       GoRoute(
         path: Routes.homePage.path,
         name: Routes.homePage.name,
