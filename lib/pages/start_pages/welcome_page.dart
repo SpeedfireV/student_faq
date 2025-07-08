@@ -23,7 +23,7 @@ class WelcomePage extends StatelessWidget {
                         color: ColorPalette.darkBlue,
                         fontStyle: FontStyle.normal)),
                 TextSpan(
-                    children: [
+                    children: const [
                       TextSpan(text: "S"),
                       TextSpan(
                         text: "TUDENT",
@@ -39,7 +39,7 @@ class WelcomePage extends StatelessWidget {
               ])),
           Expanded(child: Container()),
           RichText(
-            text: TextSpan(children: [
+            text: const TextSpan(children: [
               TextSpan(
                   text:
                       "Większość nauczycieli traci czas na to, by dowiedzieć się, czego uczniowie nie wiedzą.",

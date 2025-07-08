@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_faq/models/group/group_model.dart';
 import 'package:student_faq/services/database_service.dart';
-import 'package:student_faq/services/usos_service.dart';
 
 part 'groups_event.dart';
 part 'groups_state.dart';

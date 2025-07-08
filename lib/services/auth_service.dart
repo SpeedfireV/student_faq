@@ -16,7 +16,7 @@ class AuthService {
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
       }
-      throw e;
+      rethrow;
     } catch (e) {
       print(e);
     }
@@ -34,14 +34,13 @@ class AuthService {
       return credential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        rethrow;
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        rethrow;
       }
-      print(e);
+      rethrow;
     } catch (e) {
-      print(e);
+      rethrow;
     }
-    return null;
   }
 }

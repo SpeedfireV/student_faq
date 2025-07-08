@@ -8,7 +8,7 @@ class ButtonStyles {
   static ButtonStyle optionsElevatedButton = ElevatedButton.styleFrom(
       backgroundColor: ColorPalette.snowWhiteColor,
       elevation: 4,
-      minimumSize: Size(double.infinity, 48));
+      minimumSize: const Size(double.infinity, 48));
   static ButtonStyle whitePrimaryElevatedButton =
       ElevatedButton.styleFrom(backgroundColor: ColorPalette.snowWhiteColor);
 }

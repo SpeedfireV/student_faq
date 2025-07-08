@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_faq/bloc/create_group_bloc/create_group_event.dart';
 import 'package:student_faq/bloc/create_group_bloc/create_group_state.dart';
-import 'package:student_faq/services/database_service.dart';
 
 class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
   CreateGroupBloc() : super(CreateGroupInitial()) {
@@ -12,7 +11,9 @@ class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
       emit(CreateGroupParsing());
       try {
         debugPrint(event.group.toJson().toString());
-        final HttpsCallableResult result = await FirebaseFunctions.instance.httpsCallable('create_group').call(event.group.toJson());
+        final HttpsCallableResult result = await FirebaseFunctions.instance
+            .httpsCallable('create_group')
+            .call(event.group.toJson());
         print(result.data);
         emit(CreateGroupSuccessful());
       } on FirebaseException catch (e) {

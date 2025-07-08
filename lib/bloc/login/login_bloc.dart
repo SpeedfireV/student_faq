@@ -1,11 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:student_faq/bloc/login/login_event.dart';
 import 'package:student_faq/bloc/login/login_state.dart';
 import 'package:student_faq/services/auth_service.dart';
-import 'package:student_faq/services/database_service.dart';
-import 'package:student_faq/services/user_data_service.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginInitial()) {

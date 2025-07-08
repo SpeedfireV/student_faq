@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:student_faq/consts/color_palette.dart';
+import 'package:student_faq/models/answer/answer_model.dart';
+import 'package:student_faq/models/question/question_model.dart';
 
-class ResponseCard extends StatefulWidget {
-  const ResponseCard({super.key});
+class ResponseCard extends StatelessWidget {
+  const ResponseCard({super.key, required this.answer});
+  final Answer answer;
 
-  @override
-  State<ResponseCard> createState() => _ResponseCardState();
-}
-
-class _ResponseCardState extends State<ResponseCard> {
   @override
   Widget build(BuildContext context) {
     return Flexible(
@@ -36,7 +34,7 @@ class _ResponseCardState extends State<ResponseCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Anonymous Goose",
+                              answer.author,
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.w400),
                             ),
@@ -58,8 +56,8 @@ class _ResponseCardState extends State<ResponseCard> {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text("5"),
-                            SizedBox(width: 8),
+                            const Text("5"),
+                            const SizedBox(width: 8),
                             Icon(
                               Icons.thumb_up_outlined,
                               color: ColorPalette.buttonBackgroundColor,
@@ -68,9 +66,9 @@ class _ResponseCardState extends State<ResponseCard> {
                         )
                       ],
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Text(
-                      "Czy 2+2 to 4?",
+                      answer.questionContents,
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                     ),

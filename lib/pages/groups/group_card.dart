@@ -22,7 +22,8 @@ class GroupCard extends StatelessWidget {
             child: InkWell(
               borderRadius: BorderRadius.circular(10),
               onTap: () {
-                MyRouter.router.pushNamed("meetings", pathParameters: {"groupId": groupId});
+                MyRouter.router.pushNamed("meetings",
+                    pathParameters: {"groupId": groupId});
               },
               child: Padding(
                 padding:
@@ -32,11 +33,11 @@ class GroupCard extends StatelessWidget {
                   children: [
                     Text(
                       group.name,
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w400),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                   ],
                 ),
               ),

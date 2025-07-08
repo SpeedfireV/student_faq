@@ -13,17 +13,17 @@ class StartPages extends StatelessWidget {
   StartPages({super.key});
   final pageController = PageController();
 
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: UserDataService().isUserIntroduced(),
-      builder: (context ,state) => BlocProvider(
+      builder: (context, state) => BlocProvider(
         create: (context) => SetupCubit(),
         child: BlocListener<SetupCubit, int>(
           listener: (context, state) {
             pageController.animateToPage(state,
-                duration: Duration(milliseconds: 200), curve: Curves.ease);
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.ease);
           },
           child: Scaffold(
             body: SafeArea(
@@ -31,7 +31,11 @@ class StartPages extends StatelessWidget {
                 Expanded(
                   child: PageView(
                     controller: pageController,
-                    children: const [WelcomePage(), TutorialPage(), LoginPage()],
+                    children: const [
+                      WelcomePage(),
+                      TutorialPage(),
+                      LoginPage()
+                    ],
                   ),
                 ),
                 Padding(

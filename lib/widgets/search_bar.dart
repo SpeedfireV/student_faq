@@ -19,9 +19,9 @@ class My_SearchBarState extends State<MySearchBar> {
       },
       decoration: InputDecoration(
           fillColor: ColorPalette.snowWhiteColor,
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
           hintText: "Wyszukaj Przedmiot",
-          suffixIcon: Icon(Icons.search)),
+          suffixIcon: const Icon(Icons.search)),
     );
   }
 }

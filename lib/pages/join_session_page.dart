@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,9 +15,10 @@ class _JoinSessionPageState extends State<JoinSessionPage> {
       body: SafeArea(
         child: Column(
           children: [
-            ElevatedButton(onPressed: () {}, child: Text("SCAN QR")),
-            TextField(decoration: InputDecoration(hintText: "SESSION CODE")),
-            TextButton(onPressed: () {}, child: Text("JOIN")),
+            ElevatedButton(onPressed: () {}, child: const Text("SCAN QR")),
+            const TextField(
+                decoration: InputDecoration(hintText: "SESSION CODE")),
+            TextButton(onPressed: () {}, child: const Text("JOIN")),
           ],
         ),
       ),

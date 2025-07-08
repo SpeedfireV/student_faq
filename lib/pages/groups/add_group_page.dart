@@ -52,11 +52,10 @@ class _AddGroupPageState extends State<AddGroupPage> {
           } else if (state is CreateGroupError) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(
-                  state.exception.toString(),
-                  textAlign: TextAlign.center,
-                )));
-          }
-          else if (state is CreateGroupSuccessful) {
+              state.exception.toString(),
+              textAlign: TextAlign.center,
+            )));
+          } else if (state is CreateGroupSuccessful) {
             MyRouter.router.pop();
           }
         }, builder: (context, state) {
@@ -68,22 +67,22 @@ class _AddGroupPageState extends State<AddGroupPage> {
                   children: [
                     TextField(
                       controller: groupController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Nazwa Grupy",
                       ),
                     ),
                     TextField(
                       controller: descriptionController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Opis Grupy",
                       ),
                     ),
-
                     PrimaryElevatedButton(
                         function: () async {
                           BlocProvider.of<CreateGroupBloc>(context).add(
-                              CreateGroupSubmitForm(
-                                  Group(name: groupController.text, description: descriptionController.text)));
+                              CreateGroupSubmitForm(Group(
+                                  name: groupController.text,
+                                  description: descriptionController.text)));
                         },
                         text: "Join Using Code")
                   ],

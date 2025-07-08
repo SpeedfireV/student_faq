@@ -39,15 +39,12 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => LoginBloc())
-      ],
+      providers: [BlocProvider(create: (context) => LoginBloc())],
       child: Scaffold(
         body: SafeArea(
           child: LayoutBuilder(
             builder: (context, constraints) =>
-                BlocConsumer<LoginBloc, LoginState>(
-                    listener: (context, state) {
+                BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
               if (state is LoginSuccessful) {
                 MyRouter.router.goNamed(Routes.homePage.name);
               } else if (state is LoginUnsuccessful) {
@@ -64,8 +61,8 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: SingleChildScrollView(
                       child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                            minHeight: constraints.maxHeight),
+                        constraints:
+                            BoxConstraints(minHeight: constraints.maxHeight),
                         child: IntrinsicHeight(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -76,27 +73,24 @@ class _LoginPageState extends State<LoginPage> {
                                 size: 60,
                                 color: ColorPalette.darkBlue,
                               ),
-                              SizedBox(height: 16),
+                              const SizedBox(height: 16),
                               Text(
                                 "LOGOWANIE",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineLarge,
+                                style:
+                                    Theme.of(context).textTheme.headlineLarge,
                               ),
-                              Spacer(),
-                              SizedBox(height: 16),
+                              const Spacer(),
+                              const SizedBox(height: 16),
                               TextField(
                                 controller: loginController,
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
                                   hintText: "Login",
                                 ),
-                                onChanged: (String newPin) async {
-
-                                },
+                                onChanged: (String newPin) async {},
                                 keyboardType: TextInputType.emailAddress,
                               ),
-                              SizedBox(height: 16),
+                              const SizedBox(height: 16),
                               TextField(
                                 controller: passwordController,
                                 obscureText: true,
@@ -104,18 +98,16 @@ class _LoginPageState extends State<LoginPage> {
                                   border: OutlineInputBorder(),
                                   hintText: "Hasło",
                                 ),
-                                onChanged: (String newPin) async {
-                                },
+                                onChanged: (String newPin) async {},
                                 keyboardType: TextInputType.text,
                               ),
-                              SizedBox(height: 16),
+                              const SizedBox(height: 16),
                               const Text("LUB"),
-                              SizedBox(height: 16),
+                              const SizedBox(height: 16),
                               ElevatedButton(
                                   onPressed: () async {
-                                    BlocProvider.of<LoginBloc>(context)
-                                        .add(LoginSubmitForm(
-                                            loginController.text,
+                                    BlocProvider.of<LoginBloc>(context).add(
+                                        LoginSubmitForm(loginController.text,
                                             passwordController.text));
                                   },
                                   style: ButtonStyles

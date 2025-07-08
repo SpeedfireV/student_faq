@@ -12,7 +12,7 @@ class Question with _$Question {
     @JsonKey(includeToJson: false, includeFromJson: false) String? meetingUid,
     @JsonKey(includeToJson: false, includeFromJson: false) String? uid,
     required String questionName,
-    required List<Answer> answers,
+    @Default([]) List<Answer> answers,
     required DateTime dateTime,
     @Default(false) bool answered,
     String? questionId,

@@ -36,12 +36,12 @@ void main() async {
   MyRouter.setRouter(FirebaseAuth.instance.currentUser !=
       null); // TODO: Set FirebaseAuth.instance.currentUser != null
   runApp(MultiBlocProvider(
-    child: const MainApp(),
     providers: [
       BlocProvider(create: (context) => NavigationCubit()),
       BlocProvider(create: (context) => GroupsBloc()),
       BlocProvider(create: (context) => KeyboardCubit())
     ],
+    child: const MainApp(),
   ));
 }
 
@@ -53,7 +53,7 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
           inputDecorationTheme: InputDecorationTheme(
               contentPadding:
-                  EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                  const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
               focusedBorder: OutlineInputBorder(
                   borderSide:
                       BorderSide(color: ColorPalette.darkBlue, width: 2)),
@@ -72,7 +72,7 @@ class MainApp extends StatelessWidget {
                       TextStyle(color: ColorPalette.darkBlue, fontSize: 27))),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
-              minimumSize: Size(double.infinity, 80),
+              minimumSize: const Size(double.infinity, 80),
               textStyle: TextStyle(color: ColorPalette.snowWhiteColor),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
@@ -82,8 +82,10 @@ class MainApp extends StatelessWidget {
           ),
           floatingActionButtonTheme: FloatingActionButtonThemeData(
             backgroundColor: ColorPalette.buttonBackgroundColor,
-            smallSizeConstraints: BoxConstraints(minWidth: 60, minHeight: 60),
-            largeSizeConstraints: BoxConstraints(minWidth: 80, minHeight: 80),
+            smallSizeConstraints:
+                const BoxConstraints(minWidth: 60, minHeight: 60),
+            largeSizeConstraints:
+                const BoxConstraints(minWidth: 80, minHeight: 80),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           )),

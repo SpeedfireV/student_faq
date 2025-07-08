@@ -25,7 +25,7 @@ class TutorialPage extends StatelessWidget {
           RichText(
             text: TextSpan(
                 style: Theme.of(context).textTheme.bodyLarge,
-                children: [
+                children: const [
                   TextSpan(
                       text:
                           "Aplikacja StudentFAQ ma za zadanie ułatwić komunikację między studentami, a wykładowcami.\n\n"),

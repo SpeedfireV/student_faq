@@ -11,7 +11,6 @@ class AddMeetingPage extends StatefulWidget {
   const AddMeetingPage({super.key, required this.groupId});
   final String groupId;
 
-
   @override
   State<AddMeetingPage> createState() => _AddMeetingPageState();
 }
@@ -40,59 +39,57 @@ class _AddMeetingPageState extends State<AddMeetingPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CreateMeetingBloc(),
-
-      child: Builder(
-        builder: (context) {
-          return Scaffold(body: Stack(
-                    children: [
-
-
-                      Column(children: [
-                        TextFormField(
-                          controller: meetingNameController,
-
-                          decoration: InputDecoration(
-                            hintText: "Session Name"
-                        ),
-                        ),
-                        TextFormField(
-                          controller: meetingDescriptionController,
-                          decoration: InputDecoration(
-                            hintText: "Description"
-                        ),
-                        ),
-
-                        ElevatedButton(onPressed: () {
-                          BlocProvider.of<CreateMeetingBloc>(context).add(AddMeetingEvent(widget.groupId, meetingNameController.text, description: meetingDescriptionController.text));
-                        }, child: Text("Submit"))
-
-                      ],),
-                      BlocConsumer<CreateMeetingBloc, CreateMeetingState>(
-                          listener: (context, state) {
-                            if (state is SuccessfullyAddedMeetingState) {
-                              MyRouter.router.pop();
-                            }
-                            if (state is FailedToAddMeetingState) {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.exceptionText, textAlign: TextAlign.center,),));
-                            }
-                          },
-
-                          builder: (context, state) {
-                        if (state is AddingMeetingState) {
-                          return Container(
-                            color: Colors.red.withValues(alpha: 0.3),
-                            child: Center(child: CircularProgressIndicator()),
-                          );
-                        }
-                        return Container();
-                      }),
-                    ],
-
-
-
-          ),);
-        }
-      ),
+      child: Builder(builder: (context) {
+        return Scaffold(
+          body: Stack(
+            children: [
+              Column(
+                children: [
+                  TextFormField(
+                    controller: meetingNameController,
+                    decoration: const InputDecoration(hintText: "Session Name"),
+                  ),
+                  TextFormField(
+                    controller: meetingDescriptionController,
+                    decoration: const InputDecoration(hintText: "Description"),
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        BlocProvider.of<CreateMeetingBloc>(context).add(
+                            AddMeetingEvent(
+                                widget.groupId, meetingNameController.text,
+                                description:
+                                    meetingDescriptionController.text));
+                      },
+                      child: const Text("Submit"))
+                ],
+              ),
+              BlocConsumer<CreateMeetingBloc, CreateMeetingState>(
+                  listener: (context, state) {
+                if (state is SuccessfullyAddedMeetingState) {
+                  MyRouter.router.pop();
+                }
+                if (state is FailedToAddMeetingState) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                      state.exceptionText,
+                      textAlign: TextAlign.center,
+                    ),
+                  ));
+                }
+              }, builder: (context, state) {
+                if (state is AddingMeetingState) {
+                  return Container(
+                    color: Colors.red.withOpacity(0.3),
+                    child: const Center(child: CircularProgressIndicator()),
+                  );
+                }
+                return Container();
+              }),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

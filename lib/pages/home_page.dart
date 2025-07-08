@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: PagesDrawer(),
+      drawer: const PagesDrawer(),
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                OpenDrawerButton(),
+                const OpenDrawerButton(),
                 Expanded(child: Container()),
                 Text(
                   "STRONA GŁÓWNA",
@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
                 Expanded(child: Container()),
               ],
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             Text(
               "GRUPY",
               style: TextStyle(
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.w600,
                   color: ColorPalette.brown),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: () {},
               icon: Icon(
@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
               ),
               style: ButtonStyles.whitePrimaryElevatedButton,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: () {},
               icon: Icon(
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
               ),
               style: ButtonStyles.whitePrimaryElevatedButton,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: () {},
               icon: Icon(
@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
               ),
               style: ButtonStyles.whitePrimaryElevatedButton,
             ),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             Text(
               "SPOTKANIA",
               style: TextStyle(
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.w600,
                   color: ColorPalette.brown),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: () {},
               icon: Icon(
@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
               ),
               style: ButtonStyles.whitePrimaryElevatedButton,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: () {},
               icon: Icon(

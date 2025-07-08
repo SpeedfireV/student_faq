@@ -72,14 +72,14 @@ class _PagesDrawerState extends State<PagesDrawer> {
           alignment: Alignment.centerLeft,
           child: Row(
             children: [
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Icon(
                 icon,
                 color: selected
                     ? ColorPalette.snowWhiteColor
                     : ColorPalette.darkOrangeColor,
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Text(
                 text,
                 style: TextStyle(

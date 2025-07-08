@@ -14,7 +14,8 @@ class AnswersBloc extends Bloc<AnswersEvent, AnswersState> {
     on<FetchMoreAnswersEvent>((event, emit) async {
       emit(FetchingAnswersState());
       try {
-        alreadyFetchedAnswers.addAll(await DatabaseService.getAnwers(event.groupId, event.meetingId, event.questionId));
+        alreadyFetchedAnswers.addAll(await DatabaseService.getAnswers(
+            event.groupId, event.meetingId, event.questionId));
         emit(SuccessfullyFetchedAnswersState(false));
       } on FirebaseException catch (e) {
         emit(FailedToFetchAnswersState(e.message ?? "Unknown Error"));

@@ -6,7 +6,8 @@ import '../consts/color_palette.dart';
 import '../router.dart';
 
 class PrimaryElevatedButton extends StatefulWidget {
-  const PrimaryElevatedButton({super.key,required this.function, required this.text});
+  const PrimaryElevatedButton(
+      {super.key, required this.function, required this.text});
   final VoidCallback function;
   final String text;
 
@@ -19,11 +20,11 @@ class _PrimaryElevatedButtonState extends State<PrimaryElevatedButton> {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: widget.function,
+      style: ButtonStyles.primaryElevatedButton,
       child: Text(
         widget.text,
         style: TextStyles.buttonText,
       ),
-      style: ButtonStyles.primaryElevatedButton,
     );
   }
 }
@@ -38,11 +39,11 @@ class OpenDrawerButton extends StatelessWidget {
           onPressed: () {
             Scaffold.of(context).openDrawer();
           },
+          heroTag: "sideBar",
           child: Icon(
             Icons.menu,
             color: ColorPalette.snowWhiteColor,
-          ),
-          heroTag: "sideBar");
+          ));
     });
   }
 }
@@ -61,26 +62,32 @@ class _CustomBackButtonState extends State<CustomBackButton> {
         onPressed: () {
           MyRouter.router.pop();
         },
+        heroTag: "backButton",
         child: Icon(
           Icons.arrow_back,
           color: ColorPalette.snowWhiteColor,
-        ),
-        heroTag: "backButton");
+        ));
   }
 }
 
-
 class TextIconButton extends StatelessWidget {
-  const TextIconButton({required this.function, required this.text, required this.icon, super.key});
+  const TextIconButton(
+      {required this.function,
+      required this.text,
+      required this.icon,
+      super.key});
   final VoidCallback function;
   final String text;
   final Icon icon;
 
   @override
   Widget build(BuildContext context) {
-    return TextButton.icon(onPressed: function, label
-        : Text(text), icon: icon, style: TextButton.styleFrom(
-      foregroundColor: ColorPalette.darkOrangeColor
-    ),);
+    return TextButton.icon(
+      onPressed: function,
+      label: Text(text),
+      icon: icon,
+      style:
+          TextButton.styleFrom(foregroundColor: ColorPalette.darkOrangeColor),
+    );
   }
 }
