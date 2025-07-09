@@ -5,6 +5,7 @@ import 'package:student_faq/consts/color_palette.dart';
 import 'package:student_faq/consts/styles/text_styles.dart';
 import 'package:student_faq/models/answer/answer_model.dart';
 import 'package:student_faq/models/question/question_model.dart';
+import 'package:student_faq/pages/meetings/question_card.dart';
 import 'package:student_faq/pages/responses/response_card.dart';
 import 'package:student_faq/input_bar.dart';
 import 'package:student_faq/router.dart';
@@ -67,10 +68,11 @@ class _ResponsesPageState extends State<ResponsesPage> {
                     SizedBox(
                       height: 8,
                     ),
+                  QuestionCard(question: widget.question, groupId: widget.groupId, meetingId: widget.meetingId, clickable: false),
                     Divider(
                       thickness: 2,
                       color: ColorPalette.brown,
-                      height: 32,
+                      height: 24,
                     ),
                     Expanded(
                       child: BlocBuilder<ResponsesBloc, ResponsesState>(
@@ -82,14 +84,20 @@ class _ResponsesPageState extends State<ResponsesPage> {
                                 BlocProvider.of<ResponsesBloc>(context)
                                     .alreadyFetchedAnswers;
                             final itemCount = responses.length;
-                            return ListView.separated(
-                                itemBuilder: (context, index) {
-                                  return ResponseCard(answer: responses[index]);
-                                },
-                                separatorBuilder: (context, index) {
-                                  return SizedBox(height: 16);
-                                },
-                                itemCount: itemCount);
+                            return ListView(
+
+                              children: [ListView.separated(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return ResponseCard(answer: responses[index]);
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(height: 16);
+                                  },
+                                  itemCount: itemCount),
+                              SizedBox(height: 100)]
+                            );
                           } else if (state is ResponsesError) {
                             return Center(
                               child: Text(state.errorMessage),

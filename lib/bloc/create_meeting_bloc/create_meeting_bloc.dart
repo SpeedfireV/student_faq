@@ -12,7 +12,7 @@ class CreateMeetingBloc extends Bloc<CreateMeetingEvent, CreateMeetingState> {
     on<AddMeetingEvent>((event, emit) async {
       emit(AddingMeetingState());
       try {
-        final Meeting meeting = Meeting(sessionName: event.name, questions: [], creationDate: DateTime.now(), likes: 0);
+        final Meeting meeting = Meeting(sessionName: event.name, creationDate: DateTime.now());
         await DatabaseService.addMeeting(event.groupId, meeting);
         emit(SuccessfullyAddedMeetingState());
       }

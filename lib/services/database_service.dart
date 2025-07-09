@@ -96,7 +96,7 @@ class DatabaseService {
       var group = db.collection(groups).doc(groupId);
       var meeting = group.collection(meetings).doc(meetingId);
       return Meeting.fromJson((await meeting.get()).data()!)
-          .copyWith(groupUid: groupId, meetingId: meetingId);
+          .copyWith(groupUid: groupId, uid: meetingId);
     } on FirebaseException {
       rethrow;
     } on Exception {
@@ -128,7 +128,7 @@ class DatabaseService {
       return (await questionsCollection.get()).docs.map((v) {
         var question = Question.fromJson(v.data());
         question = question.copyWith(
-            groupUid: groupId, meetingUid: meetingId, questionId: v.id);
+            groupUid: groupId, meetingUid: meetingId, uid: v.id);
         return question;
       }).toList();
     } on FirebaseException {
@@ -145,7 +145,7 @@ class DatabaseService {
       var meeting = group.collection(meetings).doc(meetingId);
       var question = meeting.collection(questions).doc(questionId);
       return Question.fromJson((await question.get()).data()!).copyWith(
-          groupUid: groupId, meetingUid: meetingId, questionId: questionId);
+          groupUid: groupId, meetingUid: meetingId, uid: questionId);
     } on FirebaseException {
       rethrow;
     } on Exception {
@@ -187,7 +187,7 @@ class DatabaseService {
             groupUid: groupId,
             meetingUid: meetingId,
             questionUid: questionId,
-            answerId: v.id);
+            uid: v.id);
         return answer;
       }).toList();
     } on FirebaseException {
@@ -208,7 +208,7 @@ class DatabaseService {
           groupUid: groupId,
           meetingUid: meetingId,
           questionUid: questionId,
-          answerId: answerId);
+          uid: answerId);
     } on FirebaseException {
       rethrow;
     } on Exception {

@@ -12,10 +12,9 @@ class Question with _$Question {
     @JsonKey(includeToJson: false, includeFromJson: false) String? meetingUid,
     @JsonKey(includeToJson: false, includeFromJson: false) String? uid,
     required String questionName,
-    @Default([]) List<Answer> answers,
     required DateTime dateTime,
-    @Default(false) bool answered,
-    String? questionId,
+    @JsonKey(defaultValue: 0) int? likes,
+    @JsonKey(defaultValue: 0) int? answersCount,
   }) = _Question;
 
   factory Question.fromJson(Map<String, Object?> json) =>

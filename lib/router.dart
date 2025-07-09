@@ -49,7 +49,7 @@ class MyRouter {
       GoRoute(
           path: "/",
           pageBuilder: (context, state) => MaterialPage(
-              child: isUserInitialized ? const HomePage() : StartPages())),
+              child: isUserInitialized ? const GroupsPage() : StartPages())),
       GoRoute(
           path: Routes.groups.path,
           name: Routes.groups.name,

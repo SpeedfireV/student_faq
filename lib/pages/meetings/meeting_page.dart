@@ -58,21 +58,27 @@ class _MeetingPageState extends State<MeetingPage> {
                             if (state is FetchingQuestionsState) {
                               Center(child: CircularProgressIndicator());
                             } else if (state is QuestionsLoaded) {
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return QuestionCard(
-                                    question:
+                              return ListView(
+                                children: [
+                                  ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      return QuestionCard(
+                                        question:
+                                            BlocProvider.of<QuestionsBloc>(context)
+                                                .alreadyFetchedQuestions[index],
+                                        groupId: widget.groupId,
+                                        meetingId: widget.meetingId,
+                                      );
+                                    },
+                                    itemCount:
                                         BlocProvider.of<QuestionsBloc>(context)
-                                            .alreadyFetchedQuestions[index],
-                                    groupId: widget.groupId,
-                                    meetingId: widget.meetingId,
-                                  );
-                                },
-                                itemCount:
-                                    BlocProvider.of<QuestionsBloc>(context)
-                                        .alreadyFetchedQuestions
-                                        .length,
+                                            .alreadyFetchedQuestions
+                                            .length,
+                                  ),
+                                  SizedBox(height: 100)
+                                ],
                               );
                             }
                             return Center(child: CircularProgressIndicator());

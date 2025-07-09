@@ -7,6 +7,7 @@ import 'package:student_faq/services/database_service.dart';
 part 'groups_event.dart';
 part 'groups_state.dart';
 
+// TODO: Contain groupUid in Group model instead of having it as a separate field
 class GroupsBloc extends Bloc<GroupsEvent, GroupsState> {
   List<Group> groups = [];
   Iterable<String> groupsUids = [];

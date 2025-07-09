@@ -13,7 +13,8 @@ class Answer with _$Answer {
     required String author,
     required String questionContents,
     required DateTime dateTime,
-    String? answerId,
+    @JsonKey(defaultValue: 0) int? likes,
+    @JsonKey(defaultValue: 0) int? answersCount,
   }) = _Answer;
 
   factory Answer.fromJson(Map<String, Object?> json) => _$AnswerFromJson(json);

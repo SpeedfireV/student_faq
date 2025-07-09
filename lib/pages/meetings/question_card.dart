@@ -11,6 +11,7 @@ class QuestionCard extends StatelessWidget {
     required this.meetingId,
     this.onLike,
     this.isLiking = false,
+    this.clickable = true,
   });
 
   final Question question;
@@ -18,6 +19,7 @@ class QuestionCard extends StatelessWidget {
   final String meetingId;
   final VoidCallback? onLike;
   final bool isLiking;
+  final bool clickable;
 
   @override
   Widget build(BuildContext context) {
@@ -27,21 +29,21 @@ class QuestionCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        elevation: 5,
+        elevation: clickable ? 5 : 0,
         color: ColorPalette.snowWhiteColor,
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
-          onTap: () {
+          onTap: clickable ? () {
             MyRouter.router.pushNamed(
               Routes.responses.name,
               pathParameters: {
                 "groupId": groupId,
                 "meetingId": meetingId,
-                "questionId": question.questionId ?? "",
+                "questionId": question.uid ?? "",
               },
               extra: question,
             );
-          },
+          }: null,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -62,26 +64,7 @@ class QuestionCard extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              Icon(
-                                question.answers.isEmpty
-                                    ? Icons.attach_file_outlined
-                                    : Icons.attach_file,
-                                size: 16,
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                question.answers.isEmpty
-                                    ? "No attachments"
-                                    : "${question.answers.length} attachments",
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w300,
-                                ),
-                              ),
-                            ],
-                          ),
+
                         ],
                       ),
                     ),
@@ -122,22 +105,7 @@ class QuestionCard extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                if (question.answered && question.answers.isNotEmpty) ...[
-                  const SizedBox(height: 8),
-                  Divider(
-                    thickness: 2,
-                    color: ColorPalette.brown,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "Answer: ${question.answers.first.questionContents}",
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                ],
+
                 const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -145,7 +113,7 @@ class QuestionCard extends StatelessWidget {
                     const Icon(Icons.reply, size: 20),
                     const SizedBox(width: 4),
                     Text(
-                      "${question.answers.length} ${question.answers.length == 1 ? 'Answer' : 'Answers'}",
+                      "${question.answersCount} ${question.answersCount == 1 ? 'Answer' : 'Answers'}",
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
