@@ -9,24 +9,24 @@ import 'package:student_faq/input_bar.dart';
 import 'package:student_faq/models/meeting/meeting_model.dart';
 import 'package:student_faq/models/question/question_model.dart';
 import 'package:student_faq/pages/meetings/meeting_card.dart';
-import 'package:student_faq/pages/meetings/question_card.dart';
+import 'question_card.dart';
 import 'package:student_faq/router.dart';
 import 'package:student_faq/services/database_service.dart';
 
 import '../../bloc/meetings/meetings_bloc.dart';
 import '../../widgets/buttons.dart';
 
-class MeetingPage extends StatefulWidget {
-  const MeetingPage(
+class QuestionsPage extends StatefulWidget {
+  const QuestionsPage(
       {super.key, required this.groupId, required this.meetingId});
   final String groupId;
   final String meetingId;
 
   @override
-  State<MeetingPage> createState() => _MeetingPageState();
+  State<QuestionsPage> createState() => _QuestionsPageState();
 }
 
-class _MeetingPageState extends State<MeetingPage> {
+class _QuestionsPageState extends State<QuestionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +47,7 @@ class _MeetingPageState extends State<MeetingPage> {
                         children: [
                           const CustomBackButton(),
                           Expanded(child: Container()),
-                          Text("SPOTKANIE", style: TextStyles.pageTitle),
+                          Text("PYTANIA", style: TextStyles.pageTitle),
                           Expanded(child: Container()),
                         ],
                       ),

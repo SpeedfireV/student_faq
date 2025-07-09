@@ -9,7 +9,7 @@ import 'package:student_faq/pages/home_page.dart';
 import 'package:student_faq/pages/groups/groups_page.dart';
 import 'package:student_faq/pages/responses/responses_page.dart';
 import 'package:student_faq/pages/start_pages/login_page.dart';
-import 'package:student_faq/pages/meetings/meeting_page.dart';
+import 'package:student_faq/pages/questions/questions_page.dart';
 import 'package:student_faq/pages/start_pages/start_pages.dart';
 
 import 'pages/join_session_page.dart';
@@ -83,7 +83,7 @@ class MyRouter {
                       path: "${Routes.meeting.path}/:meetingId",
                       name: Routes.meeting.name,
                       pageBuilder: (context, state) => MaterialPage(
-                          child: MeetingPage(
+                          child: QuestionsPage(
                               groupId: state.pathParameters["groupId"]!,
                               meetingId: state.pathParameters["meetingId"]!)),
                       routes: [

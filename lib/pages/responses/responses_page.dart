@@ -5,10 +5,11 @@ import 'package:student_faq/consts/color_palette.dart';
 import 'package:student_faq/consts/styles/text_styles.dart';
 import 'package:student_faq/models/answer/answer_model.dart';
 import 'package:student_faq/models/question/question_model.dart';
-import 'package:student_faq/pages/meetings/question_card.dart';
 import 'package:student_faq/pages/responses/response_card.dart';
 import 'package:student_faq/input_bar.dart';
 import 'package:student_faq/router.dart';
+
+import '../questions/question_card.dart';
 
 class ResponsesPage extends StatefulWidget {
   const ResponsesPage(
